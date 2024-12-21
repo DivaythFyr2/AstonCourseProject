@@ -1,6 +1,9 @@
+package sorters;
+
 import java.util.List;
 
 public class ShellSort<T extends Comparable<T>> implements SortStrategy<T> {
+
     @Override
     public void sort(List<T> items) {
         int count = items.size();
