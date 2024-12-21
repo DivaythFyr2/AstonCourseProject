@@ -1,3 +1,5 @@
+package searchItems;
+
 import java.util.List;
 
 public class BinarySearcher {
@@ -14,6 +16,6 @@ public class BinarySearcher {
                 right = mid - 1;
             }
         }
-        return -1; // Element not found
+        return -1;
     }
 }
