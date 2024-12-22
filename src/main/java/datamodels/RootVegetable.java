@@ -1,7 +1,5 @@
 package datamodels;
 
-import java.util.Comparator;
-
 public class RootVegetable {
     private String type;
     private double weight;
@@ -47,14 +45,6 @@ public class RootVegetable {
 
         public RootVegetable build(RootVegetableBuilder rootVegetableBuilder) {
             return new RootVegetable(this);
-        }
-    }
-
-    public static class RootVegetableWeightComparator implements Comparator<RootVegetable> {
-
-        @Override
-        public int compare(RootVegetable rootVegetable1, RootVegetable rootVegetable2) {
-            return Double.compare(rootVegetable1.getWeight(), rootVegetable2.getWeight());
         }
     }
 }

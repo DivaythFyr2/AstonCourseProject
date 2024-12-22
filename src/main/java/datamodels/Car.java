@@ -1,7 +1,5 @@
 package datamodels;
 
-import java.util.Comparator;
-
 public class Car {
     private String model;
     private int power;
@@ -47,12 +45,6 @@ public class Car {
 
         public Car build() {
             return new Car(this);
-        }
-    }
-    public static class CarPowerComparator implements Comparator<Car> {
-        @Override
-        public int compare(Car car1, Car car2) {
-            return Integer.compare(car1.getPower(), car2.getPower());
         }
     }
 }
