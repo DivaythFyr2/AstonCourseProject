@@ -25,7 +25,7 @@ public class Book {
         return pageCount;
     }
 
-    static class BookBuilder {
+    public static class BookBuilder {
         private String title;
         private String author;
         private int pageCount;
