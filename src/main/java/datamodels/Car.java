@@ -25,7 +25,7 @@ public class Car {
         return yearOfManufacture;
     }
 
-    static class CarBuilder {
+    public static class CarBuilder {
         private String model;
         private int power;
         private int yearOfManufacture;

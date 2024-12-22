@@ -25,7 +25,7 @@ public class RootVegetable {
         return color;
     }
 
-    static class RootVegetableBuilder {
+    public static class RootVegetableBuilder {
         private String type;
         private double weight;
         private String color;
