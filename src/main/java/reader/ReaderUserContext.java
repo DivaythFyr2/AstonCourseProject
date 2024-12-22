@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Получаем (параметры коллекции с названиями, которые проверяем, и сам сканер):
  *      String[] parse =  readerUser.create(list, list2, scanner);
  * данные из которого подставляем в класс ридера Машина/Книги/Плоды, который читали.
- * Создаем объект через Builder():
+ * Создаем объект через Builder(), например RootVegetable:
  *             rootVegetables.add(new RootVegetable.RootVegetableBuilder()
  *                     .type(parse[0])
  *                     .weight(Double.parseDouble(parse[1]))
