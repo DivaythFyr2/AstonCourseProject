@@ -31,7 +31,7 @@ public final class ValidationUtils {
     }
 
     //Если строка пустая - false
-    //    Если сторка не содержится в коллекции с ваниантами наименований - false
+    //    Если строка не содержится в коллекции с вариантами наименований - false
     //          Прошли все проверки - true
     public static boolean checkString(String param, List<String> list) {
         if (param == null || param.isEmpty()) return false;
