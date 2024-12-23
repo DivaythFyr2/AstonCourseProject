@@ -1,4 +1,4 @@
-package org.example.Product;
+package product;
 
 import java.util.List;
 

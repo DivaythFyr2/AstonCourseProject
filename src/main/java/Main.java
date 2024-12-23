@@ -1,6 +1,4 @@
-package org.example;
-
-import org.example.Controller.Controller;
+import controller.Controller;
 
 public class Main {
 

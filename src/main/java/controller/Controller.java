@@ -1,6 +1,6 @@
-package org.example.Controller;
+package controller;
 
-import org.example.Product.Product;
+import product.Product;
 
 import java.util.Scanner;
 
