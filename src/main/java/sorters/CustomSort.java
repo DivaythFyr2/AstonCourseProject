@@ -35,21 +35,24 @@ public class CustomSort {
         // Сортируем четные значения
         List<Object> sortedEvenValues = new ArrayList<>();
         for (Object item : items) {
-            if (item instanceof Car && (Car) item.getPower() % 2 == 0) {
+            if (item instanceof Car && (Integer.parseInt(((Car) item).getPower()) % 2 == 0)) {
                 sortedEvenValues.add(item);
             } else if (item instanceof Book && Integer.parseInt(((Book) item).getPageCount()) % 2 == 0) {
                 sortedEvenValues.add(item);
-            } else if (item instanceof RootVegetable && (RootVegetable) item).() % 2 == 0) {
+            } else if (item instanceof RootVegetable && (Integer.parseInt(((RootVegetable) item).getWeight()) % 2 == 0)) {
                 sortedEvenValues.add(item);
             }
         }
 
         sortedEvenValues.sort(Comparator.comparingInt(o -> {
-            if (o instanceof Car) return ((Car) o).getPower();
-            if (o instanceof Book) return ((Book) o).getPageCount();
-            if (o instanceof RootVegetable) return (int) ((RootVegetable) o).getWeight();
-            return Integer.MAX_VALUE; // Если объект не принадлежит ни одному из указанных классов,
-        }));  // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
+            if (o instanceof Car) return Integer.parseInt(((Car) o).getPower());
+            if (o instanceof Book) return Integer.parseInt(((Book) o).getPageCount());
+            if (o instanceof RootVegetable) return Integer.parseInt(((RootVegetable) o).getWeight());
+            return Integer.MAX_VALUE; // Для безопасности
+        }));
+
+        // Если объект не принадлежит ни одному из указанных классов,
+        // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
 
         // Индекс для отслеживания текущего четного значения
         int evenIndex = 0;
