@@ -30,10 +30,10 @@ public class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", pageCount=" + pageCount +
+        return "Книга{" +
+                "Название='" + title + '\'' +
+                ", Автор='" + author + '\'' +
+                ", Кол-во страниц=" + pageCount +
                 '}';
     }
 

@@ -30,10 +30,10 @@ public class Car implements Comparable<Car> {
 
     @Override
     public String toString() {
-        return "Car{" +
-                "model='" + model + '\'' +
-                ", power=" + power +
-                ", yearOfManufacture=" + yearOfManufacture +
+        return "Автомобиль{" +
+                "Модель='" + model + '\'' +
+                ", Мощность=" + power +
+                ", Год производства=" + yearOfManufacture +
                 '}';
     }
 

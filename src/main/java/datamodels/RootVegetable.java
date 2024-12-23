@@ -30,10 +30,10 @@ public class RootVegetable implements Comparable<RootVegetable> {
 
     @Override
     public String toString() {
-        return "RootVegetable{" +
-                "type='" + type + '\'' +
-                ", weight=" + weight +
-                ", color='" + color + '\'' +
+        return "Корнеплод{" +
+                "Тип='" + type + '\'' +
+                ", Вес=" + weight +
+                ", Цвет='" + color + '\'' +
                 '}';
     }
 
