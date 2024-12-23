@@ -1,6 +1,6 @@
 package datamodels;
 
-public class RootVegetable {
+public class RootVegetable implements Comparable<RootVegetable> {
     private String type;
     private double weight;
     private String color;
@@ -23,6 +23,20 @@ public class RootVegetable {
         return color;
     }
 
+    @Override
+    public int compareTo(RootVegetable o) {
+        return Double.compare(this.weight, o.weight);
+    }
+
+    @Override
+    public String toString() {
+        return "RootVegetable{" +
+                "type='" + type + '\'' +
+                ", weight=" + weight +
+                ", color='" + color + '\'' +
+                '}';
+    }
+
     public static class RootVegetableBuilder {
         private String type;
         private double weight;
@@ -43,7 +57,7 @@ public class RootVegetable {
             return this;
         }
 
-        public RootVegetable build(RootVegetableBuilder rootVegetableBuilder) {
+        public RootVegetable build() {
             return new RootVegetable(this);
         }
     }
