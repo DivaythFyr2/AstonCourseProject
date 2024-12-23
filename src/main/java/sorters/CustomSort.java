@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class CustomSort {
-    public static void sort(List<Object> items) {
-        // Список для хранения четных значений
-        List<Object> evenValues = new ArrayList<>();
+public class CustomSort<T> {
 
+    public void sort(List<T> items) {
+        // Список для хранения четных значений
+        List<T> evenValues = new ArrayList<>();
         // Извлекаем четные значения
-        for (Object item : items) {
+        for (T item : items) {
             int value = 0;
 
             if (item instanceof Car) {
-                value = ((Car) item).getPower();
+                value = Integer.parseInt(((Car) item).getPower());
             } else if (item instanceof Book) {
-                value = ((Book) item).getPageCount();
+                value = Integer.parseInt(((Book) item).getPageCount());
             } else if (item instanceof RootVegetable) {
-                value = (int) ((RootVegetable) item).getWeight();
+                value = Integer.parseInt(((RootVegetable) item).getWeight());
             }
 
             if (value % 2 == 0) {
@@ -33,21 +33,21 @@ public class CustomSort {
         }
 
         // Сортируем четные значения
-        List<Object> sortedEvenValues = new ArrayList<>();
-        for (Object item : items) {
-            if (item instanceof Car && ((Car) item).getPower() % 2 == 0) {
+        List<T> sortedEvenValues = new ArrayList<>();
+        for (T item : items) {
+            if (item instanceof Car && (Integer.parseInt(((Car) item).getPower()) % 2 == 0)) {
                 sortedEvenValues.add(item);
-            } else if (item instanceof Book && ((Book) item).getPageCount() % 2 == 0) {
+            } else if (item instanceof Book && Integer.parseInt(((Book) item).getPageCount()) % 2 == 0) {
                 sortedEvenValues.add(item);
-            } else if (item instanceof RootVegetable && ((RootVegetable) item).getWeight() % 2 == 0) {
+            } else if (item instanceof RootVegetable && (Integer.parseInt(((RootVegetable) item).getWeight()) % 2 == 0)) {
                 sortedEvenValues.add(item);
             }
         }
 
         sortedEvenValues.sort(Comparator.comparingInt(o -> {
-            if (o instanceof Car) return ((Car) o).getPower();
-            if (o instanceof Book) return ((Book) o).getPageCount();
-            if (o instanceof RootVegetable) return (int) ((RootVegetable) o).getWeight();
+            if (o instanceof Car) return Integer.parseInt(((Car) o).getPower());
+            if (o instanceof Book) return Integer.parseInt(((Book) o).getPageCount());
+            if (o instanceof RootVegetable) return Integer.parseInt(((RootVegetable) o).getWeight());
             return Integer.MAX_VALUE; // Если объект не принадлежит ни одному из указанных классов,
         }));  // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
 
