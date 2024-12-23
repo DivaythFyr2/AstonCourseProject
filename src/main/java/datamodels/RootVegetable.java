@@ -29,9 +29,9 @@ public class RootVegetable implements Comparable<RootVegetable> {
         if (typeComparison != 0) {
             return typeComparison;
         }
-        double thisWeight = Double.parseDouble(this.weight);
-        double otherWeight = Double.parseDouble(o.weight);
-        int weightComparison = Double.compare(thisWeight, otherWeight);
+        int thisWeight = Integer.parseInt(this.weight);
+        int otherWeight = Integer.parseInt(o.weight);
+        int weightComparison = Integer.compare(thisWeight, otherWeight);
         if (weightComparison != 0) {
             return weightComparison;
         }
