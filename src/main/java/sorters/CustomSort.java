@@ -11,9 +11,7 @@ import java.util.List;
 public class CustomSort<T> {
 
     public void sort(List<T> items) {
-        // Список для хранения четных значений
         List<T> evenValues = new ArrayList<>();
-        // Извлекаем четные значения
         for (T item : items) {
             int value = 0;
 
@@ -28,11 +26,9 @@ public class CustomSort<T> {
             if (value % 2 == 0) {
                 evenValues.add(item);
             } else {
-                evenValues.add(null); // Заполняем null для нечетных значений
-            }
+                evenValues.add(null);            }
         }
 
-        // Сортируем четные значения
         List<T> sortedEvenValues = new ArrayList<>();
         for (T item : items) {
             if (item instanceof Car && (Integer.parseInt(((Car) item).getPower()) % 2 == 0)) {
@@ -48,13 +44,11 @@ public class CustomSort<T> {
             if (o instanceof Car) return Integer.parseInt(((Car) o).getPower());
             if (o instanceof Book) return Integer.parseInt(((Book) o).getPageCount());
             if (o instanceof RootVegetable) return Integer.parseInt(((RootVegetable) o).getWeight());
-            return Integer.MAX_VALUE; // Если объект не принадлежит ни одному из указанных классов,
-        }));  // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
+            return Integer.MAX_VALUE;
+        }));
 
-        // Индекс для отслеживания текущего четного значения
         int evenIndex = 0;
 
-        // Заполняем исходный список, оставляя нечетные значения на местах
         for (int i = 0; i < items.size(); i++) {
             if (evenValues.get(i) != null) {
                 items.set(i, sortedEvenValues.get(evenIndex++));
