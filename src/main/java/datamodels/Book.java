@@ -24,17 +24,16 @@ public class Book implements Comparable<Book> {
     }
 
     @Override
-    public int compareTo(Book o) {
-        return Integer.compare(this.pageCount, o.pageCount);
-    }
-
-    @Override
     public String toString() {
         return "Книга{" +
                 "Название='" + title + '\'' +
                 ", Автор='" + author + '\'' +
                 ", Кол-во страниц=" + pageCount +
                 '}';
+    }
+    @Override
+    public int compareTo(Book o) {
+        return Integer.compare(this.pageCount, o.pageCount);
     }
 
     public static class BookBuilder {
