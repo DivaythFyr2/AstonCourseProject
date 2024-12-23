@@ -1,5 +1,13 @@
 package datamodels;
 
+import controller.Controller;
+import reader.ReaderUserBook;
+import reader.ReaderUserContext;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Book implements Comparable<Book> {
     private String title;
     private String author;
@@ -47,10 +55,24 @@ public class Book implements Comparable<Book> {
                 '}';
     }
 
-    public static void bookCreation(String type) {
+    public static List<Book> bookCreation(String type) {
+        List<Book> books = new ArrayList<>();
         switch (type) {
             case "1":
-                // Утилитный метод по ручному заполнению
+                //Временная коллекция для валидации String
+                ArrayList<String> listTitle = new ArrayList<>(Arrays.asList("Война и мир", "Гамлет", "1984"));
+                ArrayList<String> listAuthor = new ArrayList<>(Arrays.asList("Толстой", "Шекспир", "Оруэлл"));
+
+                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
+                do {
+                    String[] parse =  readerUser.create(listTitle, listAuthor, Controller.scanner);
+                    books.add(new BookBuilder()
+                            .title(parse[0])
+                            .author(parse[1])
+                            .pageCount(parse[2])
+                            .build());
+                    System.out.println(reader.StringsConsole.ENTER_MORE);
+                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 break;
             case "2":
                 // Утилитный метод по заполнению из файла
@@ -58,7 +80,7 @@ public class Book implements Comparable<Book> {
             case "3":
                 // Утилитный метод автоматического заполнения
                 break;
-        }
+        } return books;
     }
 
     public static class BookBuilder {
