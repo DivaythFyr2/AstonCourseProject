@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class CustomSort {
-    public static void sort(List<Object> items) {
-        // Список для хранения четных значений
-        List<Object> evenValues = new ArrayList<>();
+public class CustomSort<T> {
 
+    public void sort(List<T> items) {
+        // Список для хранения четных значений
+        List<T> evenValues = new ArrayList<>();
         // Извлекаем четные значения
-        for (Object item : items) {
+        for (T item : items) {
             int value = 0;
 
             if (item instanceof Car) {
@@ -33,8 +33,8 @@ public class CustomSort {
         }
 
         // Сортируем четные значения
-        List<Object> sortedEvenValues = new ArrayList<>();
-        for (Object item : items) {
+        List<T> sortedEvenValues = new ArrayList<>();
+        for (T item : items) {
             if (item instanceof Car && (Integer.parseInt(((Car) item).getPower()) % 2 == 0)) {
                 sortedEvenValues.add(item);
             } else if (item instanceof Book && Integer.parseInt(((Book) item).getPageCount()) % 2 == 0) {
@@ -48,11 +48,8 @@ public class CustomSort {
             if (o instanceof Car) return Integer.parseInt(((Car) o).getPower());
             if (o instanceof Book) return Integer.parseInt(((Book) o).getPageCount());
             if (o instanceof RootVegetable) return Integer.parseInt(((RootVegetable) o).getWeight());
-            return Integer.MAX_VALUE; // Для безопасности
-        }));
-
-        // Если объект не принадлежит ни одному из указанных классов,
-        // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
+            return Integer.MAX_VALUE; // Если объект не принадлежит ни одному из указанных классов,
+        }));  // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
 
         // Индекс для отслеживания текущего четного значения
         int evenIndex = 0;
