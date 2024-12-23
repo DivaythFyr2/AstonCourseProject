@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class CustomSort {
-    public static void sortItems(List<Object> items) {
+    public static void sort(List<Object> items) {
         // Список для хранения четных значений
         List<Object> evenValues = new ArrayList<>();
 
@@ -48,8 +48,8 @@ public class CustomSort {
             if (o instanceof Car) return ((Car) o).getPower();
             if (o instanceof Book) return ((Book) o).getPageCount();
             if (o instanceof RootVegetable) return (int) ((RootVegetable) o).getWeight();
-            return Integer.MAX_VALUE; // Для безопасности
-        }));
+            return Integer.MAX_VALUE; // Если объект не принадлежит ни одному из указанных классов,
+        }));  // он получает максимальное целое значение, что может поместить его в конец отсортированного списка.
 
         // Индекс для отслеживания текущего четного значения
         int evenIndex = 0;
