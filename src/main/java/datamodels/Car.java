@@ -2,8 +2,8 @@ package datamodels;
 
 public class Car implements Comparable<Car> {
     private String model;
-    private int power;
-    private int yearOfManufacture;
+    private String power;
+    private String yearOfManufacture;
 
     public Car(CarBuilder builder) {
         this.model = builder.model;
@@ -15,17 +15,29 @@ public class Car implements Comparable<Car> {
         return model;
     }
 
-    public int getPower() {
+    public String getPower() {
         return power;
     }
 
-    public int getYearOfManufacture() {
+    public String getYearOfManufacture() {
         return yearOfManufacture;
     }
 
     @Override
     public int compareTo(Car o) {
-        return Integer.compare(this.power, o.power);
+        int modelComparison = this.model.compareTo(o.model);
+        if (modelComparison != 0) {
+            return modelComparison;
+        }
+        int thisPower = Integer.parseInt(this.power);
+        int otherPower = Integer.parseInt(o.power);
+        int powerComparison = Integer.compare(thisPower, otherPower);
+        if (powerComparison != 0) {
+            return powerComparison;
+        }
+        int thisYear = Integer.parseInt(this.yearOfManufacture);
+        int otherYear = Integer.parseInt(o.yearOfManufacture);
+        return Integer.compare(thisYear, otherYear);
     }
 
     @Override
@@ -37,22 +49,36 @@ public class Car implements Comparable<Car> {
                 '}';
     }
 
+    public static void carCreation(String type) {
+        switch (type) {
+            case "1":
+                // Утилитный метод по ручному заполнению
+                break;
+            case "2":
+                // Утилитный метод по заполнению из файла
+                break;
+            case "3":
+                // Утилитный метод автоматического заполнения
+                break;
+        }
+    }
+
     public static class CarBuilder {
         private String model;
-        private int power;
-        private int yearOfManufacture;
+        private String power;
+        private String yearOfManufacture;
 
         public CarBuilder model(String model) {
             this.model = model;
             return this;
         }
 
-        public CarBuilder power(int power) {
+        public CarBuilder power(String power) {
             this.power = power;
             return this;
         }
 
-        public CarBuilder yearOfManufacture(int yearOfManufacture) {
+        public CarBuilder yearOfManufacture(String yearOfManufacture) {
             this.yearOfManufacture = yearOfManufacture;
             return this;
         }
