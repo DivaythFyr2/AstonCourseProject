@@ -1,8 +1,8 @@
 package datamodels;
 
-public class RootVegetable {
+public class RootVegetable implements Comparable<RootVegetable> {
     private String type;
-    private double weight;
+    private String weight;
     private String color;
 
     public RootVegetable(RootVegetableBuilder rootVegetableBuilder) {
@@ -15,7 +15,7 @@ public class RootVegetable {
         return type;
     }
 
-    public double getWeight() {
+    public String getWeight() {
         return weight;
     }
 
@@ -23,9 +23,47 @@ public class RootVegetable {
         return color;
     }
 
+    @Override
+    public int compareTo(RootVegetable o) {
+        int typeComparison = this.type.compareTo(o.type);
+        if (typeComparison != 0) {
+            return typeComparison;
+        }
+        int thisWeight = Integer.parseInt(this.weight);
+        int otherWeight = Integer.parseInt(o.weight);
+        int weightComparison = Integer.compare(thisWeight, otherWeight);
+        if (weightComparison != 0) {
+            return weightComparison;
+        }
+        return this.color.compareTo(o.color);
+    }
+
+    @Override
+    public String toString() {
+        return "Корнеплод{" +
+                "Тип='" + type + '\'' +
+                ", Вес=" + weight +
+                ", Цвет='" + color + '\'' +
+                '}';
+    }
+
+    public static void rootVegetableCreation(String type) {
+        switch (type) {
+            case "1":
+                // Утилитный метод по ручному заполнению
+                break;
+            case "2":
+                // Утилитный метод по заполнению из файла
+                break;
+            case "3":
+                // Утилитный метод автоматического заполнения
+                break;
+        }
+    }
+
     public static class RootVegetableBuilder {
         private String type;
-        private double weight;
+        private String weight;
         private String color;
 
         public RootVegetableBuilder type(String type) {
@@ -33,7 +71,7 @@ public class RootVegetable {
             return this;
         }
 
-        public RootVegetableBuilder weight(double weight) {
+        public RootVegetableBuilder weight(String weight) {
             this.weight = weight;
             return this;
         }
@@ -43,7 +81,7 @@ public class RootVegetable {
             return this;
         }
 
-        public RootVegetable build(RootVegetableBuilder rootVegetableBuilder) {
+        public RootVegetable build() {
             return new RootVegetable(this);
         }
     }
