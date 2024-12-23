@@ -4,8 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
-public class ShellSort<T> implements SortStrategy<T> {
-    @Override
+public class ShellSort<T> {
     public void sort(List<T> items, Comparator<T> comparator) {
         int n = items.size();
         for (int gap = n / 2; gap > 0; gap /= 2) {

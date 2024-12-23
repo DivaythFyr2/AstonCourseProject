@@ -1,8 +1,8 @@
 package datamodels;
 
-import java.util.Comparator;
 
-public class Book {
+public class Book implements Comparable<Book> {
+
     private String title;
     private String author;
     private int pageCount;
@@ -25,6 +25,19 @@ public class Book {
         return pageCount;
     }
 
+    @Override
+    public String toString() {
+        return "Книга{" +
+                "Название='" + title + '\'' +
+                ", Автор='" + author + '\'' +
+                ", Кол-во страниц=" + pageCount +
+                '}';
+    }
+    @Override
+    public int compareTo(Book o) {
+        return Integer.compare(this.pageCount, o.pageCount);
+    }
+
     public static class BookBuilder {
         private String title;
         private String author;
@@ -45,7 +58,7 @@ public class Book {
             return this;
         }
 
-        public Book build(BookBuilder bookBuilder) {
+        public Book build() {
             return new Book(this);
         }
     }
