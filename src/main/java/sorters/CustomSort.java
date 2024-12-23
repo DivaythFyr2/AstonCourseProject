@@ -18,11 +18,11 @@ public class CustomSort {
             int value = 0;
 
             if (item instanceof Car) {
-                value = ((Car) item).getPower();
+                value = Integer.parseInt(((Car) item).getPower());
             } else if (item instanceof Book) {
-                value = ((Book) item).getPageCount();
+                value = Integer.parseInt(((Book) item).getPageCount());
             } else if (item instanceof RootVegetable) {
-                value = (int) ((RootVegetable) item).getWeight();
+                value = Integer.parseInt(((RootVegetable) item).getWeight());
             }
 
             if (value % 2 == 0) {
@@ -35,11 +35,11 @@ public class CustomSort {
         // Сортируем четные значения
         List<Object> sortedEvenValues = new ArrayList<>();
         for (Object item : items) {
-            if (item instanceof Car && ((Car) item).getPower() % 2 == 0) {
+            if (item instanceof Car && (Car) item.getPower() % 2 == 0) {
                 sortedEvenValues.add(item);
-            } else if (item instanceof Book && ((Book) item).getPageCount() % 2 == 0) {
+            } else if (item instanceof Book && Integer.parseInt(((Book) item).getPageCount()) % 2 == 0) {
                 sortedEvenValues.add(item);
-            } else if (item instanceof RootVegetable && ((RootVegetable) item).getWeight() % 2 == 0) {
+            } else if (item instanceof RootVegetable && (RootVegetable) item).() % 2 == 0) {
                 sortedEvenValues.add(item);
             }
         }
