@@ -43,7 +43,7 @@ public class IOManager {
         if (requiredValueNumber > 0 || requiredValueNumber < ELEMENTS_COUNT_TOTAL) {
             for (int s = 0; s < arr2D.length; s++) {
                 if (!(arr2D == null)) {
-                    result.add(arr2D[s][0]);
+                    result.add(arr2D[s][requiredValueNumber]);
                 }
             }
         } else {
@@ -54,7 +54,7 @@ public class IOManager {
 
     public static String[][] readDataFromTXTFileTo2DArray(String path) {
         try {
-            List<String> stringList = new ArrayList<>(Files.readAllLines(Paths.get(path), UTF_8));
+            List<String> stringList = new ArrayList<>(Files.readAllLines(Paths.get(path)));
             int stringsCount = stringList.size();
             String[][] arr2D = new String[stringsCount][ELEMENTS_COUNT_TOTAL];
             for (int s = 0; s < stringsCount; s++) {

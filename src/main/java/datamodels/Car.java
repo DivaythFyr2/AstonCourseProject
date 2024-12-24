@@ -1,6 +1,7 @@
 package datamodels;
 
 import controller.Controller;
+import ioData.CarCreatorUtil;
 import reader.ReaderUserCar;
 import reader.ReaderUserContext;
 
@@ -76,11 +77,12 @@ public class Car implements Comparable<Car> {
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 break;
             case "2":
-
                 // Утилитный метод по заполнению из файла
+                CarCreatorUtil.addCarsFromTXTFile();
                 break;
             case "3":
                 // Утилитный метод автоматического заполнения
+                CarCreatorUtil.addRandomsCars(3);
                 break;
         }return cars;
     }

@@ -3,7 +3,7 @@ package ioData;
 import datamodels.Car;
 import reader.ValidationUtils;
 
-public class CarCreator {
+public class CarCreatorUtil {
     private static final String CARS_EXTERNAL_FILE = "src/main/resources/External/Cars.txt";
     private static final String CARS_MANUFACTURES_FILE = "src/main/resources/Manufactures/Car Manufacturers.txt";
 

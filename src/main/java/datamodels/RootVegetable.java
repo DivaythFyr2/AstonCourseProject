@@ -1,6 +1,7 @@
 package datamodels;
 
 import controller.Controller;
+import ioData.RootVegetablesCreatorUtil;
 import reader.ReaderUserRootVegetables;
 import reader.ReaderUserContext;
 
@@ -76,9 +77,11 @@ public class RootVegetable implements Comparable<RootVegetable> {
                 break;
             case "2":
                 // Утилитный метод по заполнению из файла
+                RootVegetablesCreatorUtil.addRootVegetablesFromTXTFile();
                 break;
             case "3":
                 // Утилитный метод автоматического заполнения
+                RootVegetablesCreatorUtil.addRandomsRootVegetables(3);
                 break;
         } return rootVegetables;
     }

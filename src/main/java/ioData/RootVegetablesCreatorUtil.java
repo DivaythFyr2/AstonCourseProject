@@ -3,13 +3,15 @@ package ioData;
 import datamodels.RootVegetable;
 import reader.ValidationUtils;
 
-public class RootVegetablesCreator {
+public class RootVegetablesCreatorUtil {
     private static final String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
     private static final String VEGETABLES_MANUFACTURES_FILE = "src/main/resources/Manufactures/Root vegetable Manufactures.txt";
 
+
+
     public static boolean addRandomsRootVegetables(int count){
         String[][] arr2D = IOManager. readDataFromTXTFileTo2DArray(VEGETABLES_MANUFACTURES_FILE);
-        for (int element = 0; element < arr2D.length; element++) {
+        for (int element = 0; element < count; element++) {
             int rnd = (int) (Math.random() * arr2D.length);
             String type = arr2D[rnd][0];
             String weight = arr2D[rnd][1];
@@ -41,7 +43,7 @@ public class RootVegetablesCreator {
     public static boolean addNewRootVegetable(String type, String weight, String color) {
 
         if (ValidationUtils.checkString(type, IOManager.getVegetablesNamesToList())
-                && ValidationUtils.checkDouble(weight, 0.1, 1)
+                && ValidationUtils.checkDouble(weight, 0.05, 1)
                 && ValidationUtils.checkString(color, IOManager.getVegetablesColorsToList())) {
 
             new RootVegetable.RootVegetableBuilder()
