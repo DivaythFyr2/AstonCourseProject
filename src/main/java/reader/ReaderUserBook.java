@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static reader.StringsConsole.*;
-import static reader.ValidationUtils.checkInt;
-import static reader.ValidationUtils.checkString;
+import static reader.ValidationUtils.*;
 
 public final class ReaderUserBook implements ReaderStrategy {
 
