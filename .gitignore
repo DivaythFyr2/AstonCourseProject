@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Test Files ###
+.src/resources/External/1.txt
+.src/resources/External/2.txt
