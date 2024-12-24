@@ -13,7 +13,7 @@ GMC;1.7;2000
 Honda;3.7;2018
 Hummer;4.0;2012
 Hyundai;2.6;1996
-Infiniti;2.1;2001
+Infinity;2.1;2001
 Isuzu;3.2;1994
 Jaguar;3.8;2002
 Jeep;3.2;2009

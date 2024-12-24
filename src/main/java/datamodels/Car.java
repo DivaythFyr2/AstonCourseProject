@@ -76,6 +76,7 @@ public class Car implements Comparable<Car> {
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 break;
             case "2":
+
                 // Утилитный метод по заполнению из файла
                 break;
             case "3":
