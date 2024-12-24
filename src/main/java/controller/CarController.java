@@ -42,6 +42,8 @@ public class CarController {
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
+                System.out.println("Коллекция из " + database.size() + " автомобилей создана!");
+                System.out.println("-----------------------------------------------------");
                 actions();
                 break;
             case "2":
@@ -66,7 +68,7 @@ public class CarController {
                     5. Печать коллекции в консоль\s
                     0. Выход из программы.\s""");
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes(input)) {
+            if (isRes(input)) {
                 switch (input) {
                     case "1":
                         ShellSort<Car> carShellSort = new ShellSort<>();
@@ -85,6 +87,8 @@ public class CarController {
                     case "4":
                         break;
                     case "5":
+                        print();
+                        actions();
                         break;
                     case "0":
                         Controller.scanner.close();
@@ -94,5 +98,18 @@ public class CarController {
                 System.out.println("Ввод не корректен, введите одну из следующих цифр:");
             }
         }
+    }
+
+    private static void print() {
+        int counter = 1;
+        System.out.println("--------------------------------------------------------------------");
+        for (Car car : database) {
+            System.out.println(counter++ + ". " + car.toString());
+        }
+        System.out.println("--------------------------------------------------------------------");
+    }
+
+    static boolean isRes(String input) {
+        return input.matches("[0-5]");
     }
 }

@@ -63,7 +63,7 @@ public class Controller {
         return result;
     }
 
-    static boolean isRes(String input) {
+    private static boolean isRes(String input) {
         return input.matches("[0-4]");
     }
 }

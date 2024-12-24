@@ -1,13 +1,5 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserBook;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Book implements Comparable<Book> {
     private String title;
     private String author;

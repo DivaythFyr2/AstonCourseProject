@@ -1,13 +1,5 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserCar;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Car implements Comparable<Car> {
     private String model;
     private String power;

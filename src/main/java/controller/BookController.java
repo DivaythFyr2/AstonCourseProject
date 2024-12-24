@@ -3,12 +3,12 @@ package controller;
 import datamodels.Book;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
+import sorters.ShellSort;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class BookController {
@@ -30,16 +30,18 @@ public class BookController {
     static void bookCreation(String type) {
         switch (type) {
             case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listTitle = new ArrayList<>(Arrays.asList("Война и мир", "Гамлет", "1984"));
-                ArrayList<String> listAuthor = new ArrayList<>(Arrays.asList("Толстой", "Шекспир", "Оруэлл"));
-
                 ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
                 do {
-                    String[] parse = readerUser.create(listTitle, listAuthor, Controller.scanner);
-                    database.add(new Book.BookBuilder().title(parse[0]).author(parse[1]).pageCount(parse[2]).build());
+                    String[] parse = readerUser.create(titles, authors, Controller.scanner);
+                    database.add(new Book.BookBuilder()
+                            .title(parse[0])
+                            .author(parse[1])
+                            .pageCount(parse[2])
+                            .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
+                System.out.println("Коллекция из " + database.size() + " книг создана!");
+                System.out.println("-----------------------------------------------------");
                 actions();
                 break;
             case "2":
@@ -64,9 +66,12 @@ public class BookController {
                     5. Печать коллекции в консоль\s
                     0. Выход из программы.\s""");
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes(input)) {
+            if (CarController.isRes(input)) {
                 switch (input) {
                     case "1":
+                        ShellSort<Book> shellSort = new ShellSort<>();
+                        shellSort.sort(database);
+                        actions();
                         break;
                     case "2":
                         break;
@@ -75,6 +80,8 @@ public class BookController {
                     case "4":
                         break;
                     case "5":
+                        print();
+                        actions();
                         break;
                     case "0":
                         Controller.scanner.close();
@@ -100,5 +107,13 @@ public class BookController {
             throw new RuntimeException(e);
         }
     }
-}
 
+    private static void print() {
+        int counter = 1;
+        System.out.println("--------------------------------------------------------------------");
+        for (Book book : database) {
+            System.out.println(counter++ + ". " + book.toString());
+        }
+        System.out.println("--------------------------------------------------------------------");
+    }
+}

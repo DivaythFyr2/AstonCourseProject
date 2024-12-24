@@ -1,13 +1,5 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserRootVegetables;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class RootVegetable implements Comparable<RootVegetable> {
     private String type;
     private String weight;
