@@ -1,6 +1,7 @@
 package random;
 
 import datamodels.Car;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,10 +10,9 @@ import static reader.StringsConsole.*;
 
 public class RandomCarGenerator {
 
-    public static List<Car> generateRandomCars(int count) {
+    public static List<Car> generateRandomCars(int count, List<String> models) {
         List<Car> cars = new ArrayList<>();
         Random r = new Random();
-
 
         for (int i = 0; i < count; i++) {
             String model = models.get(r.nextInt(models.size()));

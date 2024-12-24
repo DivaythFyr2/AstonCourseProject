@@ -1,17 +1,19 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserBook;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class Book implements Comparable<Book> {
     private String title;
     private String author;
     private String pageCount;
+
+    public static final Comparator<Book> BY_TITLE = Comparator.comparing(Book::getTitle);
+    public static final Comparator<Book> BY_AUTHOR = Comparator.comparing(Book::getAuthor);
+    public static final Comparator<Book> BY_PAGE_COUNT = (book1, book2) -> {
+        int pageCountBook1 = Integer.parseInt(book1.getPageCount());
+        int pageCountBook2 = Integer.parseInt(book2.getPageCount());
+        return Integer.compare(pageCountBook1, pageCountBook2);
+    };
 
     public Book(BookBuilder bookBuilder) {
         this.title = bookBuilder.title;
@@ -45,6 +47,7 @@ public class Book implements Comparable<Book> {
         int otherPageCount = Integer.parseInt(o.pageCount);
         return Integer.compare(thisPageCount, otherPageCount);
     }
+
 
     @Override
     public String toString() {

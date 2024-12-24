@@ -1,17 +1,19 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserRootVegetables;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class RootVegetable implements Comparable<RootVegetable> {
     private String type;
     private String weight;
     private String color;
+
+    public static final Comparator<RootVegetable> BY_TYPE = Comparator.comparing(RootVegetable::getType);
+    public static final Comparator<RootVegetable> BY_WEIGHT = (vegetable1, vegetable2) -> {
+        int vegetableWeight1 = Integer.parseInt(vegetable1.getWeight());
+        int vegetableWeight2 = Integer.parseInt(vegetable2.getWeight());
+        return Integer.compare(vegetableWeight1, vegetableWeight2);
+    };
+    public static final Comparator<RootVegetable> BY_COLOR = Comparator.comparing(RootVegetable::getColor);
 
     public RootVegetable(RootVegetableBuilder rootVegetableBuilder) {
         this.type = rootVegetableBuilder.type;
