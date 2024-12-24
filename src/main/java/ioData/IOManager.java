@@ -1,9 +1,5 @@
 package ioData;
 
-import datamodels.Book;
-import datamodels.Car;
-import datamodels.RootVegetable;
-import reader.ValidationUtils;
 
 import java.io.*;
 import java.nio.file.Files;
