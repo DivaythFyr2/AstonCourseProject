@@ -55,34 +55,6 @@ public class Book implements Comparable<Book> {
                 '}';
     }
 
-    public static List<Book> bookCreation(String type) {
-        List<Book> books = new ArrayList<>();
-        switch (type) {
-            case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listTitle = new ArrayList<>(Arrays.asList("Война и мир", "Гамлет", "1984"));
-                ArrayList<String> listAuthor = new ArrayList<>(Arrays.asList("Толстой", "Шекспир", "Оруэлл"));
-
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
-                do {
-                    String[] parse =  readerUser.create(listTitle, listAuthor, Controller.scanner);
-                    books.add(new BookBuilder()
-                            .title(parse[0])
-                            .author(parse[1])
-                            .pageCount(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                break;
-            case "2":
-                // Утилитный метод по заполнению из файла
-                break;
-            case "3":
-                // Утилитный метод автоматического заполнения
-                break;
-        } return books;
-    }
-
     public static class BookBuilder {
         private String title;
         private String author;

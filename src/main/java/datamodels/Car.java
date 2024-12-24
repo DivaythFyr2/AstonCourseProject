@@ -57,33 +57,6 @@ public class Car implements Comparable<Car> {
                 '}';
     }
 
-    public static List<Car> carCreation(String type) {
-        List<Car> cars = new ArrayList<>();
-        switch (type) {
-            case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listCars = new ArrayList<>(Arrays.asList("Мерседес", "БМВ", "Рено"));
-
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
-                do {
-                    String[] parse =  readerUser.create(listCars, null, Controller.scanner);
-                    cars.add(new Car.CarBuilder()
-                            .model(parse[0])
-                            .power(parse[1])
-                            .yearOfManufacture(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                break;
-            case "2":
-                // Утилитный метод по заполнению из файла
-                break;
-            case "3":
-                // Утилитный метод автоматического заполнения
-                break;
-        }return cars;
-    }
-
     public static class CarBuilder {
         private String model;
         private String power;
