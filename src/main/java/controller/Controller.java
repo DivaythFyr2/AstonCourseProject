@@ -14,11 +14,11 @@ public class Controller {
                     3. Корнеплод\s
                     0. Выход из программы.\s""");
             String input = scanner.nextLine();
-            if (isRes(input)) {
+            if (isRes0_4(input)) {
                 switch (input) {
                     case "1":
                         System.out.println("Выбран класс <Автомобиль>");
-                        CarController.carCreation(completion());
+                        CarController.creatingASearchObject(completion());
                         break;
                     case "2":
                         System.out.println("Выбран класс <Книги>");
@@ -48,7 +48,7 @@ public class Controller {
                     3. Автозаполнение\s
                     4. Изменить выбор класса""");
             String input = scanner.nextLine();
-            if (isRes(input)) {
+            if (isRes0_4(input)) {
                 switch (input) {
                     case "1", "2", "3":
                         result = input;
@@ -63,7 +63,15 @@ public class Controller {
         return result;
     }
 
-    private static boolean isRes(String input) {
+    static boolean checkingForAutoCompletion(String input) {
+        return input.matches("^(100|[1-9][0-9]?)$");
+    }
+
+    private static boolean isRes0_4(String input) {
         return input.matches("[0-4]");
+    }
+
+    static boolean isRes0_5(String input) {
+        return input.matches("[0-5]");
     }
 }

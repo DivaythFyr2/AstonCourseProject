@@ -1,19 +1,25 @@
 package controller;
 
 import datamodels.Book;
+import random.RandomBookGenerator;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
+import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import static controller.Controller.checkingForAutoCompletion;
 
 public class BookController {
     private static final List<String> titles;
     private static final List<String> authors;
+    private static boolean isSort = false;
 
     static {
         titles = new ArrayList<>();
@@ -22,7 +28,7 @@ public class BookController {
     }
 
 
-    private static final List<Book> database = new ArrayList<>();
+    private static List<Book> database = new ArrayList<>();
 
     private BookController() {
     }
@@ -49,7 +55,19 @@ public class BookController {
                 actions();
                 break;
             case "3":
-//                database = Утилитный метод автоматического заполнения
+                while (true) {
+                    System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+                    String input = Controller.scanner.nextLine();
+                    if (checkingForAutoCompletion(input)) {
+                        int value = Integer.parseInt(input);
+                        database = RandomBookGenerator.generateRandomBooks(value, titles, authors);
+                        System.out.println("Коллекция <Книг> создана, количество объектов - " + value);
+                        System.out.println("-----------------------------------------------------");
+                        break;
+                    } else {
+                        System.out.println("Введено не корректное значение!");
+                    }
+                }
                 actions();
                 break;
         }
@@ -62,21 +80,57 @@ public class BookController {
                     1. Сортировать по "Названию"\s
                     2. Сортировать по "Автору"\s
                     3. Сортировать по "Количеству страниц"\s
-                    4. Поиск книги по параметру\s
+                    4. Поиск книги по параметрам\s
                     5. Печать коллекции в консоль\s
                     0. Выход из программы.\s""");
             String input = Controller.scanner.nextLine();
-            if (CarController.isRes(input)) {
+            if (Controller.isRes0_5(input)) {
                 switch (input) {
                     case "1":
-
+                        ShellSort.shellSort(database, byTittle());
+                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Названиям>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
                         actions();
                         break;
                     case "2":
+                        ShellSort.shellSort(database, byAuthor());                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Автору>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
+                        actions();
                         break;
                     case "3":
+                        ShellSort.shellSort(database, byPageCount());
+                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Количеству страниц>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
+                        actions();
                         break;
                     case "4":
+                        if (isSort) {
+                            Book book = creatingASearchObject();
+                            // ТУТ БУДЕТ ПРАВКА, ВЫЗОВ ПОИСКА БЕЗ КОМПОРАТОРА!
+                            // НА ДАННЫЙ МОМЕНТ ИЩЕТ В ТОМ СЛУЧАЕ ЕСЛИ ДО ЭТОГО НЕ БЫЛА ПРОИЗВЕДЕНА СОРТИРОВКА КОТОРАЯ ОТЛИЧАЕТСЯ ОТ ПЕРЕДАННОЙ!
+                            int result = BinarySearcher.binarySearch(database, book, byTittle());
+                            if (result >= 0) {
+                                System.out.println("Искомый объект: " + database.get(result).toString());
+                                System.out.println("Индекс объекта в коллекции: " + ++result);
+                                System.out.println("-----------------------------------------------------");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
+                        } else {
+                            System.out.println("Перед поиском, коллекция должна быть отсортирована!");
+                        }
                         break;
                     case "5":
                         print();
@@ -114,6 +168,31 @@ public class BookController {
             System.out.println(counter++ + ". " + book.toString());
         }
         System.out.println("--------------------------------------------------------------------");
+    }
+
+    private static Book creatingASearchObject() {
+        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
+        String[] parse = readerUser.create(titles, authors, Controller.scanner);
+        return new Book.BookBuilder()
+                .title(parse[0])
+                .author(parse[1])
+                .pageCount(Integer.parseInt(parse[2]))
+                .build();
+    }
+
+    // Компаратор по названию
+    private static Comparator<Book> byTittle() {
+        return Comparator.comparing(Book::getTitle);
+    }
+
+    // Компаратор по автору
+    private static Comparator<Book> byAuthor() {
+        return Comparator.comparing(Book::getAuthor);
+    }
+
+    // Компаратор по количеству страниц
+    private static Comparator<Book> byPageCount() {
+        return Comparator.comparingInt(Book::getPageCount);
     }
 }
 

@@ -1,27 +1,34 @@
 package controller;
 
 import datamodels.RootVegetable;
+import random.RandomRootVegetableGenerator;
 import reader.ReaderUserContext;
 import reader.ReaderUserRootVegetables;
+import searchItems.BinarySearcher;
+import sorters.ShellSort;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import static controller.Controller.checkingForAutoCompletion;
 
 public class RootVegetableController {
 
     static final List<String> rootType;
-    static final List<String> color;
+    static final List<String> rootColor;
+    private static boolean isSort = false;
 
     static {
         rootType = new ArrayList<>();
-        color = new ArrayList<>();
+        rootColor = new ArrayList<>();
         createBookCollections();
     }
 
-    private static final List<RootVegetable> database = new ArrayList<>();
+    private static List<RootVegetable> database = new ArrayList<>();
 
     private RootVegetableController() {
     }
@@ -31,7 +38,7 @@ public class RootVegetableController {
             case "1":
                 ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
                 do {
-                    String[] parse = readerUser.create(rootType, color, Controller.scanner);
+                    String[] parse = readerUser.create(rootType, rootColor, Controller.scanner);
                     database.add(new RootVegetable.RootVegetableBuilder()
                             .type(parse[0])
                             .weight(Double.parseDouble(parse[1]))
@@ -47,7 +54,20 @@ public class RootVegetableController {
                 // Утилитный метод по заполнению из файла
                 break;
             case "3":
-                // Утилитный метод автоматического заполнения
+                while (true) {
+                    System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+                    String input = Controller.scanner.nextLine();
+                    if (checkingForAutoCompletion(input)) {
+                        int value = Integer.parseInt(input);
+                        database = RandomRootVegetableGenerator.generateRandomVegetables(value, rootType, rootColor);
+                        System.out.println("Коллекция <Корнеплодов> создана, количество объектов - " + value);
+                        System.out.println("-----------------------------------------------------");
+                        break;
+                    } else {
+                        System.out.println("Введено не корректное значение!");
+                    }
+                }
+                actions();
                 break;
         }
     }
@@ -63,15 +83,54 @@ public class RootVegetableController {
                     5. Печать коллекции в консоль\s
                     0. Выход из программы.\s""");
             String input = Controller.scanner.nextLine();
-            if (CarController.isRes(input)) {
+            if (Controller.isRes0_5(input)) {
                 switch (input) {
                     case "1":
+                        ShellSort.shellSort(database, byType());
+                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Типу>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
+                        actions();
                         break;
                     case "2":
+                        ShellSort.shellSort(database, byColor());
+                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Цвету>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
+                        actions();
                         break;
                     case "3":
+                        ShellSort.shellSort(database, byWeight());
+                        System.out.println("""
+                                -----------------------------------------------------\s
+                                Коллекция успешно отсортирована по <Весу>\s
+                                -----------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = true;
+                        actions();
                         break;
                     case "4":
+                        if (isSort) {
+                            RootVegetable rootVegetable = creatingASearchObject();
+                            // ТУТ БУДЕТ ПРАВКА, ВЫЗОВ ПОИСКА БЕЗ КОМПОРАТОРА!
+                            // НА ДАННЫЙ МОМЕНТ ИЩЕТ В ТОМ СЛУЧАЕ ЕСЛИ ДО ЭТОГО НЕ БЫЛА ПРОИЗВЕДЕНА СОРТИРОВКА КОТОРАЯ ОТЛИЧАЕТСЯ ОТ ПЕРЕДАННОЙ!
+                            int result = BinarySearcher.binarySearch(database, rootVegetable, byType());
+                            if (result >= 0) {
+                                System.out.println("Искомый объект: " + database.get(result).toString());
+                                System.out.println("Индекс объекта в коллекции: " + ++result);
+                                System.out.println("-----------------------------------------------------");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
+                        } else {
+                            System.out.println("Перед поиском, коллекция должна быть отсортирована!");
+                        }
                         break;
                     case "5":
                         print();
@@ -94,7 +153,7 @@ public class RootVegetableController {
                 String[] parts = line.split(" - ");
                 if (parts.length >= 2) {
                     rootType.add(parts[0].trim());
-                    color.add(parts[1].trim());
+                    rootColor.add(parts[1].trim());
                 }
             }
         } catch (IOException e) {
@@ -109,5 +168,30 @@ public class RootVegetableController {
             System.out.println(counter++ + ". " + rootVegetable.toString());
         }
         System.out.println("--------------------------------------------------------------------");
+    }
+
+    private static RootVegetable creatingASearchObject() {
+        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
+        String[] parse = readerUser.create(rootType, rootColor, Controller.scanner);
+        return new RootVegetable.RootVegetableBuilder()
+                .type(parse[0])
+                .weight(Double.parseDouble(parse[1]))
+                .color(parse[2])
+                .build();
+    }
+
+    // Компаратор по Типу
+    private static Comparator<RootVegetable> byType() {
+        return Comparator.comparing(RootVegetable::getType);
+    }
+
+    // Компаратор по Цвету
+    private static Comparator<RootVegetable> byColor() {
+        return Comparator.comparing(RootVegetable::getColor);
+    }
+
+    // Компаратор по Весу
+    private static Comparator<RootVegetable> byWeight() {
+        return Comparator.comparingDouble(RootVegetable::getWeight);
     }
 }
