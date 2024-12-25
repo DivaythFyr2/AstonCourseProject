@@ -34,7 +34,7 @@ public class RootVegetableController {
                     String[] parse = readerUser.create(rootType, color, Controller.scanner);
                     database.add(new RootVegetable.RootVegetableBuilder()
                             .type(parse[0])
-                            .weight( parse[1])
+                            .weight(Double.parseDouble(parse[1]) )
                             .color(parse[2])
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);

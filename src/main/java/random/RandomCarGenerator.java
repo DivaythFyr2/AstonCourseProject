@@ -21,8 +21,8 @@ public class RandomCarGenerator {
 
             cars.add(new Car.CarBuilder()
                     .model(model)
-                    .power(power)
-                    .yearOfManufacture(year)
+                    .power(Double.parseDouble(power) )
+                    .yearOfManufacture(Integer.parseInt(year))
                     .build());
         }
         return cars;

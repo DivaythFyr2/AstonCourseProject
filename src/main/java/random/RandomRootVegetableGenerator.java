@@ -21,7 +21,7 @@ public class RandomRootVegetableGenerator {
 
             rootVegetables.add(new RootVegetable.RootVegetableBuilder()
                     .type(type)
-                    .weight(weight)
+                    .weight(Double.parseDouble(weight) )
                     .color(color)
                     .build());
         }

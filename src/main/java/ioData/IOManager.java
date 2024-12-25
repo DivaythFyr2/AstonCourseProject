@@ -47,7 +47,7 @@ public class IOManager {
                 }
             }
         } else {
-            System.err.println("Required value number " + requiredValueNumber + "in not correct.");
+            System.err.println("IOManager: Required value number " + requiredValueNumber + "in not correct.");
         }
         return result;
     }
@@ -66,21 +66,53 @@ public class IOManager {
 //            System.out.println(Arrays.deepToString(arr2D));
             return arr2D;
         } catch (IOException e) {
-            System.err.println("Ошибка чтения файла " + path);
+            System.err.println("IOManager: Ошибка чтения файла " + path);
             return null;
         }
     }
 
-    public static boolean appendStringToTXTFile(String fileName, String text) {
-
+    public static Double parseDouble(String str) {
         try {
+            return Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Double. Возвращено значение null.");
+            return null;
+        }
+    }
+
+    public static Integer parseInt(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Integer. Возвращено значение null.");
+            return null;
+        }
+    }
+
+    public static boolean appendDataToTXTFile(String fileName, String text) {
+        try {
+            new File(fileName).createNewFile();
+            text += "\n";
             Files.write(Paths.get(fileName), text.getBytes(), StandardOpenOption.APPEND);
             return true;
         } catch (IOException e) {
-            System.err.println("Ошибка добавления данных в файл " + text);
+            System.err.println("IOManager: Ошибка добавления текста в файл " + text);
         }
         return false;
     }
+
+    public static boolean appendDataToTXTFile(String fileName, List<String> list) {
+        try {
+            new File(fileName).createNewFile();
+            Files.write(Paths.get(fileName), list, StandardOpenOption.APPEND);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Ошибка записи в файл " + fileName);
+        }
+        return false;
+
+    }
+
 
     public static String readDataFromTXTFileToString(String fileName) {
         try {
@@ -90,20 +122,6 @@ public class IOManager {
             return null;
         }
     }
-
-    public static String readDataFromTXTFileToStringTEST(String fileName) {
-        File file = new File(fileName);
-        try {
-            byte[] arrayBytes = Files.readAllBytes(file.toPath());
-            String text = new String(arrayBytes, UTF_8);
-            return text;
-        } catch (FileNotFoundException e) {
-            return null;
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
 
     public static String[] readDataFromTXTFileToArray(String path) {
         try {
@@ -115,15 +133,6 @@ public class IOManager {
         }
     }
 
-    public static boolean writeDataToTXTFile(List<String> list, String fileName) {
-        try {
-            Files.write(Paths.get(fileName), list, StandardOpenOption.CREATE);
-            return true;
-        } catch (IOException e) {
-            System.err.println("Ошибка записи в файл " + fileName);
-        }
-        return false;
-    }
 
     public static boolean writeDataToTXTFile(String text, String fileName) {
         try {

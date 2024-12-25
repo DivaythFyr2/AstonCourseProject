@@ -14,7 +14,7 @@ public class RootVegetablesCreatorUtil {
         for (int element = 0; element < count; element++) {
             int rnd = (int) (Math.random() * arr2D.length);
             String type = arr2D[rnd][0];
-            String weight = arr2D[rnd][1];
+            Double weight = IOManager.parseDouble(arr2D[rnd][1]) ;
             String color = arr2D[rnd][2];
 
             addNewRootVegetable(type, weight, color);
@@ -29,18 +29,22 @@ public class RootVegetablesCreatorUtil {
 
     public static boolean addRootVegetablesFromTXTFile(String fileName) {
         String[][] arr2D = IOManager. readDataFromTXTFileTo2DArray(fileName);
+        if (arr2D == null) {
+            System.err.println("RootVegetablesCreatorUtil: Ошибка добавления из внешнего файла по причине отсутствия входных данных.");
+            return false;
+        }
         for (int element = 0; element < arr2D.length; element++) {
             String type = arr2D[element][0];
-            String weight = arr2D[element][1];
+            Double weight = IOManager.parseDouble(arr2D[element][1]) ;
             String color = arr2D[element][2];
 
             addNewRootVegetable(type, weight, color);
-
+            return true;
         }
         return false;
     }
 
-    public static boolean addNewRootVegetable(String type, String weight, String color) {
+    public static boolean addNewRootVegetable(String type, Double weight, String color) {
 
         if (ValidationUtils.checkString(type, IOManager.getVegetablesNamesToList())
                 && ValidationUtils.checkDouble(weight, 0.05, 1)
@@ -54,7 +58,7 @@ public class RootVegetablesCreatorUtil {
 
             return true;
         } else {
-            System.err.println("Fail data in [" + type + " " + weight + " " + color + "]");
+            System.err.println("RootVegetablesCreatorUtil: Fail data in [" + type + " " + weight + " " + color + "]");
         }
         return false;
     }

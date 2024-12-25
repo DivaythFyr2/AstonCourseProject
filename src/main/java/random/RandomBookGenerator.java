@@ -22,7 +22,7 @@ public class RandomBookGenerator {
             books.add(new Book.BookBuilder()
                     .title(title)
                     .author(author)
-                    .pageCount(pages)
+                    .pageCount(Integer.parseInt(pages) )
                     .build());
         }
         return books;
