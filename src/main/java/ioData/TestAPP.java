@@ -1,5 +1,9 @@
 package ioData;
 
+import datamodels.Book;
+import datamodels.Car;
+import datamodels.RootVegetable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,14 @@ public class TestAPP {
         String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
         String VEGETABLES_MANUFACTURES_FILE = "src/main/resources/Manufactures/Root vegetable Manufactures.txt";
 
-//        CarCreatorUtil.addCarsFromTXTFile();
+
+//        List<RootVegetable> rootVegetableList = RootVegetablesCreatorUtil.addRandomsRootVegetables(3);
+//        System.out.println(rootVegetableList);
+//        List<Book> books = BookCreatorUtil.addRandomsBooks(2);
+//        System.out.println(books);
+//        List<Car> carList = CarCreatorUtil.addRandomsCars(3);
+//        System.out.println(carList);
+        //        CarCreatorUtil.addCarsFromTXTFile();
 //        CarCreatorUtil.addRandomsCars(3);
 //        BookCreatorUtil.addBooksFromTXTFile();
 //        BookCreatorUtil.addRandomsBooks(3);

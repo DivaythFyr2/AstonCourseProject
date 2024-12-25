@@ -2,6 +2,10 @@ package ioData;
 
 import datamodels.Book;
 import reader.ValidationUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static reader.ValidationConstants.*;
 
 public class BookCreatorUtil {
@@ -9,56 +13,61 @@ public class BookCreatorUtil {
     private static final String BOOKS_EXTERNAL_FILE = "src/main/resources/External/Books.txt";
     private static final String BOOKS_MANUFACTURES_FILE = "src/main/resources/Manufactures/Book Manufactures.txt";
 
-    public static boolean addRandomsBooks(int count){
+    public static List<Book>  addRandomsBooks(int count){
         String[][] arr2D = IOManager.readDataFromTXTFileTo2DArray(BOOKS_MANUFACTURES_FILE);
+        List<Book> bookList = new ArrayList<>();
+        if (arr2D == null) {
+            System.err.println("BookCreatorUtil: Ошибка добавления из внешнего файла по причине отсутствия входных данных.");
+            return null;
+        }
         for (int element = 0; element < count; element++) {
             int rnd = (int) (Math.random() * arr2D.length);
             String title = arr2D[rnd][0];
             String author = arr2D[rnd][1];
             int pageCount = IOManager.parseInt(arr2D[rnd][2]) ;
 
-            addNewBook(title, author, pageCount);
+            bookList.add(addNewBook(title, author, pageCount));
         }
-        return false;
+        return bookList;
     }
 
-    public static boolean addBooksFromTXTFile() {
+    public static List<Book> addBooksFromTXTFile() {
         return addBooksFromTXTFile(BOOKS_EXTERNAL_FILE);
     }
 
-    public static boolean addBooksFromTXTFile(String fileName) {
+    public static List<Book> addBooksFromTXTFile(String fileName) {
         String[][] arr2D = IOManager.readDataFromTXTFileTo2DArray(fileName);
+        List<Book> bookList = new ArrayList<>();
         if (arr2D == null) {
             System.err.println("BookCreatorUtil: Ошибка добавления из внешнего файла по причине отсутствия входных данных.");
-            return false;
+            return null;
         }
         for (int element = 0; element < arr2D.length; element++) {
             String title = arr2D[element][0];
             String author = arr2D[element][1];
             int pageCount = IOManager.parseInt(arr2D[element][2]) ;
 
-            addNewBook(title, author, pageCount);
-            return true;
+            bookList.add(addNewBook(title, author, pageCount));
         }
-        return false;
+        return bookList;
     }
 
-    public static boolean addNewBook(String title, String author, int pageCount) {
+    public static Book addNewBook(String title, String author, int pageCount) {
         if (ValidationUtils.checkString(title, IOManager.getBooksNamesToList()) &&
                 ValidationUtils.checkString(author, IOManager.getBookAuthorsNames()) &&
                 ValidationUtils.checkInt(String.valueOf(pageCount), BOOK_MIN_PAGE, BOOK_MAX_PAGE)) {
 
-            new Book.BookBuilder()
+           Book book = new Book.BookBuilder()
                     .title(title)
                     .author(author)
                     .pageCount(pageCount)
                     .build();
 
-            return true;
+            return book;
         } else {
-            System.err.println("BookCreatorUtil: Fail data in [" + title + " " + author + " " + pageCount + "]");
+            System.err.println("BookCreatorUtil: One of data in [" + title + " " + author + " " + pageCount + "] is not valid.");
         }
-        return false;
+        return null;
     }
 
 }

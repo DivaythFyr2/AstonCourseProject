@@ -12,8 +12,8 @@ public class ValidationConstants {
     public static final int BOOK_MIN_PAGE = 15;
     public static final int BOOK_MAX_PAGE = 10000;
 
-    public static final double ROOT_VEGETABLES_MIN_WEIGHT = 50;
-    public static final double ROOT_VEGETABLES_MAX_WEIGHT = 100000;
+    public static final double ROOT_VEGETABLES_MIN_WEIGHT = 0.05;
+    public static final double ROOT_VEGETABLES_MAX_WEIGHT = 20;
 
 }
 

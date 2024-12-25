@@ -75,8 +75,8 @@ public class IOManager {
         try {
             return Double.parseDouble(str);
         } catch (NumberFormatException e) {
-            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Double. Возвращено значение null.");
-            return null;
+            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Double. Возвращено значение 0.0");
+            return 0.0;
         }
     }
 
@@ -84,8 +84,8 @@ public class IOManager {
         try {
             return Integer.parseInt(str);
         } catch (NumberFormatException e) {
-            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Integer. Возвращено значение null.");
-            return null;
+            System.err.println("IOManager: Ошибка перевода из String(" + str + ") в Integer. Возвращено значение 0.");
+            return 0;
         }
     }
 

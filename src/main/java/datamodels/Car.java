@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class Car {
     private String model;
-    private int power;
+    private double power;
     private int yearOfManufacture;
 
     public Car(CarBuilder builder) {
@@ -17,7 +17,7 @@ public class Car {
         return model;
     }
 
-    public int getPower() {
+    public double getPower() {
         return power;
     }
 
