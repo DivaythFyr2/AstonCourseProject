@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RootVegetable implements Comparable<RootVegetable> {
+public class RootVegetable {
     private String type;
-    private String weight;
+    private double weight;
     private String color;
 
     public RootVegetable(RootVegetableBuilder rootVegetableBuilder) {
@@ -23,27 +23,12 @@ public class RootVegetable implements Comparable<RootVegetable> {
         return type;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
     public String getColor() {
         return color;
-    }
-
-    @Override
-    public int compareTo(RootVegetable o) {
-        int typeComparison = this.type.compareTo(o.type);
-        if (typeComparison != 0) {
-            return typeComparison;
-        }
-        int thisWeight = Integer.parseInt(this.weight);
-        int otherWeight = Integer.parseInt(o.weight);
-        int weightComparison = Integer.compare(thisWeight, otherWeight);
-        if (weightComparison != 0) {
-            return weightComparison;
-        }
-        return this.color.compareTo(o.color);
     }
 
     @Override
@@ -67,9 +52,9 @@ public class RootVegetable implements Comparable<RootVegetable> {
                 do {
                     String[] parse =  readerUser.create(listType, listColor, Controller.scanner);
                     rootVegetables.add(new RootVegetableBuilder()
-                            .type(parse[0])
-                            .weight(parse[1])
-                            .color(parse[2])
+                            .type(String.valueOf(parse[0]))
+                            .weight(Double.parseDouble(parse[1]))
+                            .color(String.valueOf(parse[2]))
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
@@ -85,7 +70,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
 
     public static class RootVegetableBuilder {
         private String type;
-        private String weight;
+        private double weight;
         private String color;
 
         public RootVegetableBuilder type(String type) {
@@ -93,7 +78,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
             return this;
         }
 
-        public RootVegetableBuilder weight(String weight) {
+        public RootVegetableBuilder weight(double weight) {
             this.weight = weight;
             return this;
         }

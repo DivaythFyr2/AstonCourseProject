@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Car implements Comparable<Car> {
+public class Car {
     private String model;
-    private String power;
-    private String yearOfManufacture;
+    private double power;
+    private int yearOfManufacture;
 
     public Car(CarBuilder builder) {
         this.model = builder.model;
@@ -23,29 +23,12 @@ public class Car implements Comparable<Car> {
         return model;
     }
 
-    public String getPower() {
+    public double getPower() {
         return power;
     }
 
-    public String getYearOfManufacture() {
+    public double getYearOfManufacture() {
         return yearOfManufacture;
-    }
-
-    @Override
-    public int compareTo(Car o) {
-        int modelComparison = this.model.compareTo(o.model);
-        if (modelComparison != 0) {
-            return modelComparison;
-        }
-        int thisPower = Integer.parseInt(this.power);
-        int otherPower = Integer.parseInt(o.power);
-        int powerComparison = Integer.compare(thisPower, otherPower);
-        if (powerComparison != 0) {
-            return powerComparison;
-        }
-        int thisYear = Integer.parseInt(this.yearOfManufacture);
-        int otherYear = Integer.parseInt(o.yearOfManufacture);
-        return Integer.compare(thisYear, otherYear);
     }
 
     @Override
@@ -68,9 +51,9 @@ public class Car implements Comparable<Car> {
                 do {
                     String[] parse =  readerUser.create(listCars, null, Controller.scanner);
                     cars.add(new Car.CarBuilder()
-                            .model(parse[0])
-                            .power(parse[1])
-                            .yearOfManufacture(parse[2])
+                            .model(String.valueOf(parse[0]))
+                            .power(Double.parseDouble(parse[1]))
+                            .yearOfManufacture(Integer.parseInt(parse[2]))
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
@@ -86,20 +69,20 @@ public class Car implements Comparable<Car> {
 
     public static class CarBuilder {
         private String model;
-        private String power;
-        private String yearOfManufacture;
+        private double power;
+        private int yearOfManufacture;
 
         public CarBuilder model(String model) {
             this.model = model;
             return this;
         }
 
-        public CarBuilder power(String power) {
+        public CarBuilder power(double power) {
             this.power = power;
             return this;
         }
 
-        public CarBuilder yearOfManufacture(String yearOfManufacture) {
+        public CarBuilder yearOfManufacture(int yearOfManufacture) {
             this.yearOfManufacture = yearOfManufacture;
             return this;
         }
@@ -109,4 +92,3 @@ public class Car implements Comparable<Car> {
         }
     }
 }
-
