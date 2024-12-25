@@ -71,6 +71,17 @@ public class IOManager {
         }
     }
 
+    public static boolean appendStringToTXTFile(String fileName, String text) {
+
+        try {
+            Files.write(Paths.get(fileName), text.getBytes(), StandardOpenOption.APPEND);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Ошибка добавления данных в файл " + text);
+        }
+        return false;
+    }
+
     public static String readDataFromTXTFileToString(String fileName) {
         try {
             return Files.readString(Paths.get(fileName));
