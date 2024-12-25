@@ -1,9 +1,12 @@
 package datamodels;
 
-public class Book implements Comparable<Book> {
+import java.util.Comparator;
+
+public class Book {
     private String title;
     private String author;
-    private String pageCount;
+    private int pageCount;
+
 
     public Book(BookBuilder bookBuilder) {
         this.title = bookBuilder.title;
@@ -19,23 +22,8 @@ public class Book implements Comparable<Book> {
         return author;
     }
 
-    public String getPageCount() {
+    public int getPageCount() {
         return pageCount;
-    }
-
-    @Override
-    public int compareTo(Book o) {
-        int titleComparison = this.title.compareTo(o.title);
-        if (titleComparison != 0) {
-            return titleComparison;
-        }
-        int authorComparison = this.author.compareTo(o.author);
-        if (authorComparison != 0) {
-            return authorComparison;
-        }
-        int thisPageCount = Integer.parseInt(this.pageCount);
-        int otherPageCount = Integer.parseInt(o.pageCount);
-        return Integer.compare(thisPageCount, otherPageCount);
     }
 
     @Override
@@ -50,7 +38,7 @@ public class Book implements Comparable<Book> {
     public static class BookBuilder {
         private String title;
         private String author;
-        private String pageCount;
+        private int pageCount;
 
         public BookBuilder title(String title) {
             this.title = title;
@@ -62,7 +50,7 @@ public class Book implements Comparable<Book> {
             return this;
         }
 
-        public BookBuilder pageCount(String pageCount) {
+        public BookBuilder pageCount(int pageCount) {
             this.pageCount = pageCount;
             return this;
         }
