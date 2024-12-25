@@ -26,9 +26,17 @@ public class CustomSort<T> {
             if (value % 2 == 0) {
                 evenValues.add(item);
             } else {
+<<<<<<< HEAD
                 evenValues.add(null);            }
         }
 
+=======
+                evenValues.add(null); // Заполняем null для нечетных значений
+            }
+        }
+
+        // Сортируем четные значения
+>>>>>>> origin/reader
         List<T> sortedEvenValues = new ArrayList<>();
         for (T item : items) {
             if (item instanceof Car && (Integer.parseInt(((Car) item).getPower()) % 2 == 0)) {

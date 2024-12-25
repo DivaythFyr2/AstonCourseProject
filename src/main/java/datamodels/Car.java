@@ -1,5 +1,13 @@
 package datamodels;
 
+import controller.Controller;
+import reader.ReaderUserCar;
+import reader.ReaderUserContext;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Car implements Comparable<Car> {
     private String model;
     private String power;
@@ -49,10 +57,23 @@ public class Car implements Comparable<Car> {
                 '}';
     }
 
-    public static void carCreation(String type) {
+    public static List<Car> carCreation(String type) {
+        List<Car> cars = new ArrayList<>();
         switch (type) {
             case "1":
-                // Утилитный метод по ручному заполнению
+                //Временная коллекция для валидации String
+                ArrayList<String> listCars = new ArrayList<>(Arrays.asList("Мерседес", "БМВ", "Рено"));
+
+                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
+                do {
+                    String[] parse =  readerUser.create(listCars, null, Controller.scanner);
+                    cars.add(new Car.CarBuilder()
+                            .model(parse[0])
+                            .power(parse[1])
+                            .yearOfManufacture(parse[2])
+                            .build());
+                    System.out.println(reader.StringsConsole.ENTER_MORE);
+                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 break;
             case "2":
                 // Утилитный метод по заполнению из файла
@@ -60,7 +81,7 @@ public class Car implements Comparable<Car> {
             case "3":
                 // Утилитный метод автоматического заполнения
                 break;
-        }
+        }return cars;
     }
 
     public static class CarBuilder {
