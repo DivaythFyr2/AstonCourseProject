@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Car {
     private String model;
-    private double power;
+    private int power;
     private int yearOfManufacture;
 
     public Car(CarBuilder builder) {
@@ -52,7 +52,7 @@ public class Car {
                     String[] parse =  readerUser.create(listCars, null, Controller.scanner);
                     cars.add(new Car.CarBuilder()
                             .model(String.valueOf(parse[0]))
-                            .power(Double.parseDouble(parse[1]))
+                            .power(Integer.parseInt(parse[1]))
                             .yearOfManufacture(Integer.parseInt(parse[2]))
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
@@ -69,7 +69,7 @@ public class Car {
 
     public static class CarBuilder {
         private String model;
-        private double power;
+        private int power;
         private int yearOfManufacture;
 
         public CarBuilder model(String model) {
@@ -77,7 +77,7 @@ public class Car {
             return this;
         }
 
-        public CarBuilder power(double power) {
+        public CarBuilder power(int power) {
             this.power = power;
             return this;
         }
