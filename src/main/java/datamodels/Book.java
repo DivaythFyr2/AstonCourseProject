@@ -2,18 +2,11 @@ package datamodels;
 
 import java.util.Comparator;
 
-public class Book implements Comparable<Book> {
+public class Book {
     private String title;
     private String author;
-    private String pageCount;
+    private int pageCount;
 
-    public static final Comparator<Book> BY_TITLE = Comparator.comparing(Book::getTitle);
-    public static final Comparator<Book> BY_AUTHOR = Comparator.comparing(Book::getAuthor);
-    public static final Comparator<Book> BY_PAGE_COUNT = (book1, book2) -> {
-        int pageCountBook1 = Integer.parseInt(book1.getPageCount());
-        int pageCountBook2 = Integer.parseInt(book2.getPageCount());
-        return Integer.compare(pageCountBook1, pageCountBook2);
-    };
 
     public Book(BookBuilder bookBuilder) {
         this.title = bookBuilder.title;
@@ -29,25 +22,9 @@ public class Book implements Comparable<Book> {
         return author;
     }
 
-    public String getPageCount() {
+    public int getPageCount() {
         return pageCount;
     }
-
-    @Override
-    public int compareTo(Book o) {
-        int titleComparison = this.title.compareTo(o.title);
-        if (titleComparison != 0) {
-            return titleComparison;
-        }
-        int authorComparison = this.author.compareTo(o.author);
-        if (authorComparison != 0) {
-            return authorComparison;
-        }
-        int thisPageCount = Integer.parseInt(this.pageCount);
-        int otherPageCount = Integer.parseInt(o.pageCount);
-        return Integer.compare(thisPageCount, otherPageCount);
-    }
-
 
     @Override
     public String toString() {
@@ -61,7 +38,7 @@ public class Book implements Comparable<Book> {
     public static class BookBuilder {
         private String title;
         private String author;
-        private String pageCount;
+        private int pageCount;
 
         public BookBuilder title(String title) {
             this.title = title;
@@ -73,7 +50,7 @@ public class Book implements Comparable<Book> {
             return this;
         }
 
-        public BookBuilder pageCount(String pageCount) {
+        public BookBuilder pageCount(int pageCount) {
             this.pageCount = pageCount;
             return this;
         }

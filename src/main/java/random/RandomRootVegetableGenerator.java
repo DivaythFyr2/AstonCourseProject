@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static reader.StringsConsole.*;
+import static reader.ValidationConstants.*;
 
 public class RandomRootVegetableGenerator {
 
@@ -16,7 +16,7 @@ public class RandomRootVegetableGenerator {
 
         for (int i = 0; i < count; i++) {
             String type = types.get(r.nextInt(types.size()));
-            String weight = String.valueOf(ROOT_VEGETABLES_MIN_WEIGHT + r.nextInt(ROOT_VEGETABLES_MAX_WEIGHT));
+            double weight = ROOT_VEGETABLES_MIN_WEIGHT + r.nextDouble(ROOT_VEGETABLES_MAX_WEIGHT - ROOT_VEGETABLES_MIN_WEIGHT + 1);
             String color = colors.get(r.nextInt(colors.size()));
 
             rootVegetables.add(new RootVegetable.RootVegetableBuilder()

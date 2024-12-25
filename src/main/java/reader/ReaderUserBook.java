@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import static reader.StringsConsole.*;
 import static reader.ValidationUtils.*;
+import static reader.ValidationConstants.*;
 
 public final class ReaderUserBook implements ReaderStrategy {
 

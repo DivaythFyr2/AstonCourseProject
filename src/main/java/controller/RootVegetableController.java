@@ -31,13 +31,13 @@ public class RootVegetableController {
             case "1":
                 ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
                 do {
-                    String[] parse = readerUser.create(rootType, color, Controller.scanner);
-                    database.add(new RootVegetable.RootVegetableBuilder()
-                            .type(parse[0])
-                            .weight(parse[1])
-                            .color(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
+//                    String[] parse = readerUser.create(rootType, color, Controller.scanner);
+//                    database.add(new RootVegetable.RootVegetableBuilder()
+//                            .type(parse[0])
+//                            .weight(parse[1])
+//                            .color(parse[2])
+//                            .build());
+//                    System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 System.out.println("Коллекция из " + database.size() + " корнеплодов создана!");
                 System.out.println("-----------------------------------------------------");

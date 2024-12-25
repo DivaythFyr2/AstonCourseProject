@@ -34,13 +34,13 @@ public class CarController {
             case "1":
                 ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
                 do {
-                    String[] parse = readerUser.create(validation, null, Controller.scanner);
-                    database.add(new Car.CarBuilder()
-                            .model(parse[0])
-                            .power(parse[1])
-                            .yearOfManufacture(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
+//                    String[] parse = readerUser.create(validation, null, Controller.scanner);
+//                    database.add(new Car.CarBuilder()
+//                            .model(parse[0])
+//                            .power(parse[1])
+//                            .yearOfManufacture(parse[2])
+//                            .build());
+//                    System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 System.out.println("Коллекция из " + database.size() + " автомобилей создана!");
                 System.out.println("-----------------------------------------------------");
@@ -71,8 +71,8 @@ public class CarController {
             if (isRes(input)) {
                 switch (input) {
                     case "1":
-                        ShellSort<Car> carShellSort = new ShellSort<>();
-                        carShellSort.sort(database);
+//                        ShellSort<Car> carShellSort = new ShellSort<>();
+//                        carShellSort.sort(database);
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция умпешно отсортирована по <Марке> автомобиля.\s

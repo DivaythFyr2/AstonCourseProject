@@ -2,18 +2,10 @@ package datamodels;
 
 import java.util.Comparator;
 
-public class RootVegetable implements Comparable<RootVegetable> {
+public class RootVegetable {
     private String type;
-    private String weight;
+    private double weight;
     private String color;
-
-    public static final Comparator<RootVegetable> BY_TYPE = Comparator.comparing(RootVegetable::getType);
-    public static final Comparator<RootVegetable> BY_WEIGHT = (vegetable1, vegetable2) -> {
-        int vegetableWeight1 = Integer.parseInt(vegetable1.getWeight());
-        int vegetableWeight2 = Integer.parseInt(vegetable2.getWeight());
-        return Integer.compare(vegetableWeight1, vegetableWeight2);
-    };
-    public static final Comparator<RootVegetable> BY_COLOR = Comparator.comparing(RootVegetable::getColor);
 
     public RootVegetable(RootVegetableBuilder rootVegetableBuilder) {
         this.type = rootVegetableBuilder.type;
@@ -25,7 +17,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
         return type;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
@@ -33,20 +25,6 @@ public class RootVegetable implements Comparable<RootVegetable> {
         return color;
     }
 
-    @Override
-    public int compareTo(RootVegetable o) {
-        int typeComparison = this.type.compareTo(o.type);
-        if (typeComparison != 0) {
-            return typeComparison;
-        }
-        int thisWeight = Integer.parseInt(this.weight);
-        int otherWeight = Integer.parseInt(o.weight);
-        int weightComparison = Integer.compare(thisWeight, otherWeight);
-        if (weightComparison != 0) {
-            return weightComparison;
-        }
-        return this.color.compareTo(o.color);
-    }
 
     @Override
     public String toString() {
@@ -59,7 +37,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
 
     public static class RootVegetableBuilder {
         private String type;
-        private String weight;
+        private double weight;
         private String color;
 
         public RootVegetableBuilder type(String type) {
@@ -67,7 +45,7 @@ public class RootVegetable implements Comparable<RootVegetable> {
             return this;
         }
 
-        public RootVegetableBuilder weight(String weight) {
+        public RootVegetableBuilder weight(double weight) {
             this.weight = weight;
             return this;
         }
