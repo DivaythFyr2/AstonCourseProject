@@ -2,6 +2,7 @@ package ioData;
 
 import datamodels.RootVegetable;
 import reader.ValidationUtils;
+import static reader.ValidationConstants.*;
 
 public class RootVegetablesCreatorUtil {
     private static final String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
@@ -47,7 +48,7 @@ public class RootVegetablesCreatorUtil {
     public static boolean addNewRootVegetable(String type, Double weight, String color) {
 
         if (ValidationUtils.checkString(type, IOManager.getVegetablesNamesToList())
-                && ValidationUtils.checkDouble(weight, 0.05, 1)
+                && ValidationUtils.checkDouble(String.valueOf(weight), ROOT_VEGETABLES_MIN_WEIGHT, ROOT_VEGETABLES_MAX_WEIGHT)
                 && ValidationUtils.checkString(color, IOManager.getVegetablesColorsToList())) {
 
             new RootVegetable.RootVegetableBuilder()

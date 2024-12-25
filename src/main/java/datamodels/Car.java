@@ -1,16 +1,10 @@
 package datamodels;
 
-import controller.Controller;
-import reader.ReaderUserCar;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class Car {
     private String model;
-    private double power;
+    private int power;
     private int yearOfManufacture;
 
     public Car(CarBuilder builder) {
@@ -23,13 +17,14 @@ public class Car {
         return model;
     }
 
-    public double getPower() {
+    public int getPower() {
         return power;
     }
 
-    public double getYearOfManufacture() {
+    public int getYearOfManufacture() {
         return yearOfManufacture;
     }
+
 
     @Override
     public String toString() {
@@ -40,36 +35,9 @@ public class Car {
                 '}';
     }
 
-    public static List<Car> carCreation(String type) {
-        List<Car> cars = new ArrayList<>();
-        switch (type) {
-            case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listCars = new ArrayList<>(Arrays.asList("Мерседес", "БМВ", "Рено"));
-
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
-                do {
-                    String[] parse =  readerUser.create(listCars, null, Controller.scanner);
-                    cars.add(new Car.CarBuilder()
-                            .model(String.valueOf(parse[0]))
-                            .power(Double.parseDouble(parse[1]))
-                            .yearOfManufacture(Integer.parseInt(parse[2]))
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                break;
-            case "2":
-                // Утилитный метод по заполнению из файла
-                break;
-            case "3":
-                // Утилитный метод автоматического заполнения
-                break;
-        }return cars;
-    }
-
     public static class CarBuilder {
         private String model;
-        private double power;
+        private int power;
         private int yearOfManufacture;
 
         public CarBuilder model(String model) {
@@ -77,7 +45,7 @@ public class Car {
             return this;
         }
 
-        public CarBuilder power(double power) {
+        public CarBuilder power(int power) {
             this.power = power;
             return this;
         }
@@ -92,3 +60,4 @@ public class Car {
         }
     }
 }
+

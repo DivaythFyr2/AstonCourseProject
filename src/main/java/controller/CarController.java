@@ -37,7 +37,7 @@ public class CarController {
                     String[] parse = readerUser.create(validation, null, Controller.scanner);
                     database.add(new Car.CarBuilder()
                             .model(parse[0])
-                            .power(Double.parseDouble(parse[1]) )
+                            .power(Integer.parseInt(parse[1]))
                             .yearOfManufacture(Integer.parseInt(parse[2]))
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);

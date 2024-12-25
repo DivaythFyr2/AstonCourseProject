@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import static reader.StringsConsole.*;
 import static reader.ValidationUtils.*;
+import static reader.ValidationConstants.*;
 
 public final class ReaderUserCar implements ReaderStrategy {
 
@@ -22,8 +23,7 @@ public final class ReaderUserCar implements ReaderStrategy {
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER))
-                        System.out.println(FAIL + CAR[i]);
+                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER)) System.out.println(FAIL + CAR[i]);
                     else break;
                 }
                 if (i == 2) {

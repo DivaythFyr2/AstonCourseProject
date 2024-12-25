@@ -2,6 +2,7 @@ package ioData;
 
 import datamodels.Book;
 import reader.ValidationUtils;
+import static reader.ValidationConstants.*;
 
 public class BookCreatorUtil {
 
@@ -45,7 +46,7 @@ public class BookCreatorUtil {
     public static boolean addNewBook(String title, String author, int pageCount) {
         if (ValidationUtils.checkString(title, IOManager.getBooksNamesToList()) &&
                 ValidationUtils.checkString(author, IOManager.getBookAuthorsNames()) &&
-                ValidationUtils.checkInt(pageCount, 1, 3000)) {
+                ValidationUtils.checkInt(String.valueOf(pageCount), BOOK_MIN_PAGE, BOOK_MAX_PAGE)) {
 
             new Book.BookBuilder()
                     .title(title)
