@@ -1,13 +1,9 @@
 package controller;
 
-import datamodels.Book;
-import datamodels.Car;
-import datamodels.RootVegetable;
-
 import java.util.Scanner;
 
 public class Controller {
-    public final static Scanner scanner = new Scanner(System.in);
+    final static Scanner scanner = new Scanner(System.in);
 
     public static void start() {
         while (true) {
@@ -22,15 +18,15 @@ public class Controller {
                 switch (input) {
                     case "1":
                         System.out.println("Выбран класс <Автомобиль>");
-                        Car.carCreation(completion());
+                        CarController.carCreation(completion());
                         break;
                     case "2":
                         System.out.println("Выбран класс <Книги>");
-                        Book.bookCreation(completion());
+                        BookController.bookCreation(completion());
                         break;
                     case "3":
                         System.out.println("Выбран класс <Корнеплоды>");
-                        RootVegetable.rootVegetableCreation(completion());
+                        RootVegetableController.rootVegetableCreation(completion());
                         break;
                     case "0":
                         System.exit(0);

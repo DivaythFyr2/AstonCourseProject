@@ -1,7 +1,6 @@
 package datamodels;
 
 import controller.Controller;
-import ioData.BookCreatorUtil;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
 
@@ -77,11 +76,9 @@ public class Book implements Comparable<Book> {
                 break;
             case "2":
                 // Утилитный метод по заполнению из файла
-                BookCreatorUtil.addBooksFromTXTFile();
                 break;
             case "3":
                 // Утилитный метод автоматического заполнения
-                BookCreatorUtil.addRandomsBooks(3);
                 break;
         } return books;
     }

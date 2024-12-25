@@ -1,18 +1,19 @@
 package datamodels;
 
-import controller.Controller;
-import ioData.RootVegetablesCreatorUtil;
-import reader.ReaderUserRootVegetables;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class RootVegetable implements Comparable<RootVegetable> {
     private String type;
     private String weight;
     private String color;
+
+    public static final Comparator<RootVegetable> BY_TYPE = Comparator.comparing(RootVegetable::getType);
+    public static final Comparator<RootVegetable> BY_WEIGHT = (vegetable1, vegetable2) -> {
+        int vegetableWeight1 = Integer.parseInt(vegetable1.getWeight());
+        int vegetableWeight2 = Integer.parseInt(vegetable2.getWeight());
+        return Integer.compare(vegetableWeight1, vegetableWeight2);
+    };
+    public static final Comparator<RootVegetable> BY_COLOR = Comparator.comparing(RootVegetable::getColor);
 
     public RootVegetable(RootVegetableBuilder rootVegetableBuilder) {
         this.type = rootVegetableBuilder.type;
@@ -54,36 +55,6 @@ public class RootVegetable implements Comparable<RootVegetable> {
                 ", Вес=" + weight +
                 ", Цвет='" + color + '\'' +
                 '}';
-    }
-
-    public static List<RootVegetable> rootVegetableCreation(String type) {
-        List<RootVegetable> rootVegetables = new ArrayList<>();
-        switch (type) {
-            case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listType = new ArrayList<>(Arrays.asList("Помидор", "Огурец", "Перец"));
-                ArrayList<String> listColor = new ArrayList<>(Arrays.asList("Красный", "Зеленый", "Желтый"));
-
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
-                do {
-                    String[] parse =  readerUser.create(listType, listColor, Controller.scanner);
-                    rootVegetables.add(new RootVegetableBuilder()
-                            .type(parse[0])
-                            .weight(parse[1])
-                            .color(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                break;
-            case "2":
-                // Утилитный метод по заполнению из файла
-                RootVegetablesCreatorUtil.addRootVegetablesFromTXTFile();
-                break;
-            case "3":
-                // Утилитный метод автоматического заполнения
-                RootVegetablesCreatorUtil.addRandomsRootVegetables(3);
-                break;
-        } return rootVegetables;
     }
 
     public static class RootVegetableBuilder {

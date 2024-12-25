@@ -1,18 +1,23 @@
 package datamodels;
 
-import controller.Controller;
-import ioData.CarCreatorUtil;
-import reader.ReaderUserCar;
-import reader.ReaderUserContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Comparator;
 
 public class Car implements Comparable<Car> {
     private String model;
     private String power;
     private String yearOfManufacture;
+
+    public static final Comparator<Car> BY_MODEL = Comparator.comparing(Car::getModel);
+    public static final Comparator<Car> BY_POWER = (car1, car2) -> {
+        int carPower1 = Integer.parseInt(car1.getPower());
+        int carPower2 = Integer.parseInt(car2.getPower());
+        return Integer.compare(carPower1, carPower2);
+    };
+    public static final Comparator<Car> BY_YEAR_OF_MANUFACTURE = (car1, car2) -> {
+        int carYear1 = Integer.parseInt(car1.getYearOfManufacture());
+        int carYear2 = Integer.parseInt(car2.getYearOfManufacture());
+        return Integer.compare(carYear1, carYear2);
+    };
 
     public Car(CarBuilder builder) {
         this.model = builder.model;
@@ -56,35 +61,6 @@ public class Car implements Comparable<Car> {
                 ", Мощность=" + power +
                 ", Год производства=" + yearOfManufacture +
                 '}';
-    }
-
-    public static List<Car> carCreation(String type) {
-        List<Car> cars = new ArrayList<>();
-        switch (type) {
-            case "1":
-                //Временная коллекция для валидации String
-                ArrayList<String> listCars = new ArrayList<>(Arrays.asList("Мерседес", "БМВ", "Рено"));
-
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
-                do {
-                    String[] parse =  readerUser.create(listCars, null, Controller.scanner);
-                    cars.add(new Car.CarBuilder()
-                            .model(parse[0])
-                            .power(parse[1])
-                            .yearOfManufacture(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                break;
-            case "2":
-                // Утилитный метод по заполнению из файла
-                CarCreatorUtil.addCarsFromTXTFile();
-                break;
-            case "3":
-                // Утилитный метод автоматического заполнения
-                CarCreatorUtil.addRandomsCars(3);
-                break;
-        }return cars;
     }
 
     public static class CarBuilder {
