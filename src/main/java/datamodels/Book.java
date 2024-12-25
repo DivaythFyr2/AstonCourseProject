@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Book implements Comparable<Book> {
+public class Book{
     private String title;
     private String author;
-    private String pageCount;
+    private int pageCount;
 
     public Book(BookBuilder bookBuilder) {
         this.title = bookBuilder.title;
@@ -27,23 +27,8 @@ public class Book implements Comparable<Book> {
         return author;
     }
 
-    public String getPageCount() {
+    public int getPageCount() {
         return pageCount;
-    }
-
-    @Override
-    public int compareTo(Book o) {
-        int titleComparison = this.title.compareTo(o.title);
-        if (titleComparison != 0) {
-            return titleComparison;
-        }
-        int authorComparison = this.author.compareTo(o.author);
-        if (authorComparison != 0) {
-            return authorComparison;
-        }
-        int thisPageCount = Integer.parseInt(this.pageCount);
-        int otherPageCount = Integer.parseInt(o.pageCount);
-        return Integer.compare(thisPageCount, otherPageCount);
     }
 
     @Override
@@ -67,9 +52,9 @@ public class Book implements Comparable<Book> {
                 do {
                     String[] parse =  readerUser.create(listTitle, listAuthor, Controller.scanner);
                     books.add(new BookBuilder()
-                            .title(parse[0])
-                            .author(parse[1])
-                            .pageCount(parse[2])
+                            .title(String.valueOf(parse[0]))
+                            .author(String.valueOf(parse[1]))
+                            .pageCount(Integer.parseInt(parse[2]))
                             .build());
                     System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
@@ -86,7 +71,7 @@ public class Book implements Comparable<Book> {
     public static class BookBuilder {
         private String title;
         private String author;
-        private String pageCount;
+        private int pageCount;
 
         public BookBuilder title(String title) {
             this.title = title;
@@ -98,7 +83,7 @@ public class Book implements Comparable<Book> {
             return this;
         }
 
-        public BookBuilder pageCount(String pageCount) {
+        public BookBuilder pageCount(int pageCount) {
             this.pageCount = pageCount;
             return this;
         }
