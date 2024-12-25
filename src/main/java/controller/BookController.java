@@ -32,13 +32,13 @@ public class BookController {
             case "1":
                 ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
                 do {
-//                    String[] parse = readerUser.create(titles, authors, Controller.scanner);
-//                    database.add(new Book.BookBuilder()
-//                            .title(parse[0])
-//                            .author(parse[1])
-//                            .pageCount(parse[2])
-//                            .build());
-//                    System.out.println(reader.StringsConsole.ENTER_MORE);
+                    String[] parse = readerUser.create(titles, authors, Controller.scanner);
+                    database.add(new Book.BookBuilder()
+                            .title(parse[0])
+                            .author(parse[1])
+                            .pageCount(Integer.parseInt(parse[2]))
+                            .build());
+                    System.out.println(reader.StringsConsole.ENTER_MORE);
                 } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 System.out.println("Коллекция из " + database.size() + " книг создана!");
                 System.out.println("-----------------------------------------------------");

@@ -10,8 +10,8 @@ public final class StringsConsole {
    public static final String ENTER_MORE = "Хотите ввести ещё? \n" +
            "Если \"да\" введите \"1\", если \"нет\" нажмите любую клавишу.";
 
-   public static final String[] CAR = {"Модель: ", "Мощность, л.с.: ", "Год производства: "};
+   public static final String[] CAR = {"Модель: ", "Мощность: ", "Год производства: "};
    public static final String[] BOOK = {"Название: ", "Автор: ", "Колличество страниц: "};
-   public static final String[] ROOT_VEGETABLES = {"Вид: ", "Вес, гр.: ", "Цвет: "};
+   public static final String[] ROOT_VEGETABLES = {"Вид: ", "Вес: ", "Цвет: "};
 
 }

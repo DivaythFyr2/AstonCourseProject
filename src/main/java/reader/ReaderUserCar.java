@@ -23,12 +23,11 @@ public final class ReaderUserCar implements ReaderStrategy {
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER))
-                        System.out.println(FAIL + CAR[i]);
+                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER)) System.out.println(FAIL + CAR[i]);
                     else break;
                 }
                 if (i == 2) {
-                    if (!checkDouble(input, CAR_MIN_YEAR, CAR_MAX_YEAR)) System.out.println(FAIL + CAR[i]);
+                    if (!checkInt(input, CAR_MIN_YEAR, CAR_MAX_YEAR)) System.out.println(FAIL + CAR[i]);
                     else break;
                 }
             }

@@ -1,6 +1,7 @@
 package reader;
 
 public class ValidationConstants {
+
     private ValidationConstants() {}
 
     public static final int CAR_MIN_POWER = 25;
