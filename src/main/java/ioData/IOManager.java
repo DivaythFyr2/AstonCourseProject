@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -52,9 +53,9 @@ public class IOManager {
         return result;
     }
 
-    public static String[][] readDataFromTXTFileTo2DArray(String path) {
+    public static String[][] readDataFromTXTFileTo2DArray(String fileName) {
         try {
-            List<String> stringList = new ArrayList<>(Files.readAllLines(Paths.get(path)));
+            List<String> stringList = new ArrayList<>(Files.readAllLines(Paths.get(fileName)));
             int stringsCount = stringList.size();
             String[][] arr2D = new String[stringsCount][ELEMENTS_COUNT_TOTAL];
             for (int s = 0; s < stringsCount; s++) {
@@ -66,9 +67,28 @@ public class IOManager {
 //            System.out.println(Arrays.deepToString(arr2D));
             return arr2D;
         } catch (IOException e) {
-            System.err.println("IOManager: Ошибка чтения файла " + path);
+            System.err.println("IOManager: Ошибка чтения файла " + fileName);
             return null;
         }
+    }
+
+
+    public static List<String> readDataFromTXTFileToList(String fileName){
+        try {
+            return Files.readAllLines(Paths.get(fileName));
+        } catch (IOException e) {
+            System.err.println("IOManager: ошибка чтения из файла. Возвращено null.");
+            return null;
+        }
+    }
+
+    public static List<String[]> readDataFromTXTFileToListArrays(String fileName){
+        List<String> stringList = readDataFromTXTFileToList(fileName);
+        if (stringList == null) {
+            System.err.println("IOManager: Ошибка добавления из внешнего файла по причине отсутствия входных данных. Возврещено null.");
+            return null;
+        }
+        return stringList.stream().map(s -> s.split(";")).toList(); //проверить
     }
 
     public static Double parseDouble(String str) {

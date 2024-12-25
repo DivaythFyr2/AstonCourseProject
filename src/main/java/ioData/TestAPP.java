@@ -15,6 +15,9 @@ public class TestAPP {
         String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
         String VEGETABLES_MANUFACTURES_FILE = "src/main/resources/Manufactures/Root vegetable Manufactures.txt";
 
+
+        List<String[]> list = IOManager.readDataFromTXTFileToListArrays(CARS_EXTERNAL_FILE);
+
 //        CarCreatorUtil.addCarsFromTXTFile();
 //        CarCreatorUtil.addRandomsCars(3);
 //        BookCreatorUtil.addBooksFromTXTFile();
@@ -49,5 +52,6 @@ public class TestAPP {
 //            stringList.add("Text" +i);
 //        }
 //        System.out.println(IOManager.appendDataToTXTFile(dst, stringList));
+//        System.out.println(IOManager.readDataFromTXTFileToList(CARS_EXTERNAL_FILE));
     }
 }
