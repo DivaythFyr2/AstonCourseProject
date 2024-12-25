@@ -3,7 +3,6 @@ package searchItems;
 import java.util.Comparator;
 import java.util.List;
 
-//БИНАРНЫЙ ПОИСК ТОЛЬКО ДЛЯ ОТСОРТИРОВАННЫХ КОЛЛЕКЦИЙ И ОДНОГО КЛАССА!
 public class BinarySearcher {
     public static <T> int binarySearch(List<T> sortedList, T key, Comparator<T> comparator) {
         int left = 0, right = sortedList.size() - 1;

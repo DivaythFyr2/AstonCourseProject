@@ -1,9 +1,17 @@
 package datamodels;
 
-public class Car implements Comparable<Car> {
+import controller.Controller;
+import reader.ReaderUserCar;
+import reader.ReaderUserContext;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Car {
     private String model;
-    private String power;
-    private String yearOfManufacture;
+    private double power;
+    private int yearOfManufacture;
 
     public Car(CarBuilder builder) {
         this.model = builder.model;
@@ -15,29 +23,12 @@ public class Car implements Comparable<Car> {
         return model;
     }
 
-    public String getPower() {
+    public double getPower() {
         return power;
     }
 
-    public String getYearOfManufacture() {
+    public double getYearOfManufacture() {
         return yearOfManufacture;
-    }
-
-    @Override
-    public int compareTo(Car o) {
-        int modelComparison = this.model.compareTo(o.model);
-        if (modelComparison != 0) {
-            return modelComparison;
-        }
-        int thisPower = Integer.parseInt(this.power);
-        int otherPower = Integer.parseInt(o.power);
-        int powerComparison = Integer.compare(thisPower, otherPower);
-        if (powerComparison != 0) {
-            return powerComparison;
-        }
-        int thisYear = Integer.parseInt(this.yearOfManufacture);
-        int otherYear = Integer.parseInt(o.yearOfManufacture);
-        return Integer.compare(thisYear, otherYear);
     }
 
     @Override
@@ -49,10 +40,23 @@ public class Car implements Comparable<Car> {
                 '}';
     }
 
-    public static void carCreation(String type) {
+    public static List<Car> carCreation(String type) {
+        List<Car> cars = new ArrayList<>();
         switch (type) {
             case "1":
-                // Утилитный метод по ручному заполнению
+                //Временная коллекция для валидации String
+                ArrayList<String> listCars = new ArrayList<>(Arrays.asList("Мерседес", "БМВ", "Рено"));
+
+                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
+                do {
+                    String[] parse =  readerUser.create(listCars, null, Controller.scanner);
+                    cars.add(new Car.CarBuilder()
+                            .model(String.valueOf(parse[0]))
+                            .power(Double.parseDouble(parse[1]))
+                            .yearOfManufacture(Integer.parseInt(parse[2]))
+                            .build());
+                    System.out.println(reader.StringsConsole.ENTER_MORE);
+                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
                 break;
             case "2":
                 // Утилитный метод по заполнению из файла
@@ -60,25 +64,25 @@ public class Car implements Comparable<Car> {
             case "3":
                 // Утилитный метод автоматического заполнения
                 break;
-        }
+        }return cars;
     }
 
     public static class CarBuilder {
         private String model;
-        private String power;
-        private String yearOfManufacture;
+        private double power;
+        private int yearOfManufacture;
 
         public CarBuilder model(String model) {
             this.model = model;
             return this;
         }
 
-        public CarBuilder power(String power) {
+        public CarBuilder power(double power) {
             this.power = power;
             return this;
         }
 
-        public CarBuilder yearOfManufacture(String yearOfManufacture) {
+        public CarBuilder yearOfManufacture(int yearOfManufacture) {
             this.yearOfManufacture = yearOfManufacture;
             return this;
         }
@@ -88,4 +92,3 @@ public class Car implements Comparable<Car> {
         }
     }
 }
-

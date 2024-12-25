@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static reader.StringsConsole.*;
-import static reader.ValidationUtils.checkDouble;
-import static reader.ValidationUtils.checkString;
+import static reader.ValidationUtils.*;
 
 public final class ReaderUserRootVegetables implements ReaderStrategy {
 
@@ -23,7 +22,7 @@ public final class ReaderUserRootVegetables implements ReaderStrategy {
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkDouble(input, ROOT_VEGETABLES_MIN_WEIGHT, ROOT_VEGETABLES_MAX_WEIGHT))
+                    if (!checkInt(input, ROOT_VEGETABLES_MIN_WEIGHT, ROOT_VEGETABLES_MAX_WEIGHT))
                         System.out.println(FAIL + ROOT_VEGETABLES[i]);
                     else break;
                 }
