@@ -63,7 +63,7 @@ public class Controller {
         return result;
     }
 
-    static boolean checkingForAutoCompletion(String input) {
+    public static boolean checkingForAutoCompletion(String input) {
         return input.matches("^(100|[1-9][0-9]?)$");
     }
 
@@ -71,7 +71,7 @@ public class Controller {
         return input.matches("[0-4]");
     }
 
-    static boolean isRes0_5(String input) {
-        return input.matches("[0-5]");
+    static boolean isRes0_6(String input) {
+        return input.matches("[0-6]");
     }
 }

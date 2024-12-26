@@ -1,5 +1,6 @@
 package datamodelscreators;
 
+import controller.Controller;
 import datamodels.Car;
 import ioData.Parser;
 import reader.ReaderUserCar;
@@ -15,7 +16,7 @@ import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.*;
 
 public class CarCreator {
-    private List<String> validation;
+    private final List<String> validation;
 
     public CarCreator(List<String> validation) {
         this.validation = validation;
@@ -41,6 +42,7 @@ public class CarCreator {
 
         return cars;
     }
+
     public List<Car> readerFileCars(Scanner scanner) {
 
         List<Car> cars;
@@ -53,12 +55,23 @@ public class CarCreator {
         return cars;
     }
 
-    public static List<Car> generateRandomCars(int count, List<String> models) {
+    public List<Car> generateRandomCars(Scanner scanner) {
+        int value;
+        while (true) {
+            System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+            String input = scanner.nextLine();
+            if (Controller.checkingForAutoCompletion(input)) {
+                value = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("Введено не корректное значение!");
+            }
+        }
         List<Car> cars = new ArrayList<>();
         Random r = new Random();
 
-        for (int i = 0; i < count; i++) {
-            String model = models.get(r.nextInt(models.size()));
+        for (int i = 0; i < value; i++) {
+            String model = validation.get(r.nextInt(validation.size()));
             int power = CAR_MIN_POWER + r.nextInt(CAR_MAX_POWER - CAR_MIN_POWER + 1);
             int year = CAR_MIN_YEAR + r.nextInt(CAR_MAX_YEAR - CAR_MIN_YEAR + 1);
 
@@ -68,6 +81,8 @@ public class CarCreator {
                     .yearOfManufacture(year)
                     .build());
         }
+        System.out.println("Коллекция <Автомобилей> создана, количество объектов - " + value);
+        System.out.println("-----------------------------------------------------");
         return cars;
     }
 

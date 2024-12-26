@@ -3,6 +3,7 @@ package controller;
 import datamodels.Car;
 import datamodelscreators.CarCreator;
 import searchItems.BinarySearcher;
+import sorters.CustomSort;
 import sorters.ShellSort;
 
 import java.io.IOException;
@@ -12,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static controller.Controller.checkingForAutoCompletion;
-import static controller.Controller.isRes0_5;
+import static controller.Controller.isRes0_6;
 
 
 public class CarController {
@@ -28,6 +28,7 @@ public class CarController {
         }
     }
 
+    private static final CarCreator carCreator = new CarCreator(validation);
     private static List<Car> database = new ArrayList<>();
 
     private CarController() {
@@ -36,27 +37,15 @@ public class CarController {
     static void carCreation(String type) {
         switch (type) {
             case "1":
-                database = new CarCreator(validation).createAndAddCars(Controller.scanner);
+                database = carCreator.createAndAddCars(Controller.scanner);
                 actions();
                 break;
             case "2":
-                database = new CarCreator(validation).readerFileCars(Controller.scanner);
+                database = carCreator.readerFileCars(Controller.scanner);
                 actions();
                 break;
             case "3":
-                while (true) {
-                    System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
-                    String input = Controller.scanner.nextLine();
-                    if (checkingForAutoCompletion(input)) {
-                        int value = Integer.parseInt(input);
-                        database = CarCreator.generateRandomCars(value, validation);
-                        System.out.println("Коллекция <Автомобилей> создана, количество объектов - " + value);
-                        System.out.println("-----------------------------------------------------");
-                        break;
-                    } else {
-                        System.out.println("Введено не корректное значение!");
-                    }
-                }
+                database = carCreator.generateRandomCars(Controller.scanner);
                 actions();
                 break;
         }
@@ -69,11 +58,13 @@ public class CarController {
                     1. Сортировать по "Марке"\s
                     2. Сортировать по "Мощности"\s
                     3. Сортировать по "Году производства"\s
-                    4. Поиск машины по параметрам\s
-                    5. Печать коллекции в консоль\s
-                    0. Выход из программы.\s""");
+                    4. Сортировать по "Кастомизированной" сортировке <Мощность>\s
+                    5. Поиск машины по параметрам\s
+                    6. Печать коллекции в консоль\s
+                    0. Выход из программы.\s
+                    """);
             String input = Controller.scanner.nextLine();
-            if (isRes0_5(input)) {
+            if (isRes0_6(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, Car.byModel());
@@ -89,7 +80,7 @@ public class CarController {
                         ShellSort.shellSort(database, Car.byPower());
                         System.out.println("""
                                 -----------------------------------------------------\s
-                                Коллекция умпешно отсортирована по <Мощности>\s
+                                Коллекция успешно отсортирована по <Мощности>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
                         isSort = true;
@@ -99,22 +90,36 @@ public class CarController {
                         ShellSort.shellSort(database, Car.byYearOfManufacture());
                         System.out.println("""
                                 -----------------------------------------------------\s
-                                Коллекция умпешно отсортирована по <Году производства>\s
+                                Коллекция успешно отсортирована по <Году производства>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
                         isSort = false;
                         actions();
                         break;
                     case "4":
+                        CustomSort.sort(database);
+                        System.out.println("""
+                                ----------------------------------------------------------------\s
+                                Коллекция успешно отсортирована <Кастомизированной>
+                                сортировкий по полю <Мощность>\s
+                                ----------------------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = false;
+                        actions();
+                        break;
+                    case "5":
                         if (isSort) {
-                            Car car = CarCreator.creatingASearchObject(validation,Controller.scanner);
+                            Car car = CarCreator.creatingASearchObject(validation, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, car);
                             printObject(resultIndex, database);
                         } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована по мощности!");
+                            System.out.println("""
+                                    -------------------------------------------------------------------------\s
+                                    Перед поиском, коллекция должна быть отсортирована по количеству стриниц!\s
+                                    -------------------------------------------------------------------------""");
                         }
                         break;
-                    case "5":
+                    case "6":
                         print();
                         actions();
                         break;

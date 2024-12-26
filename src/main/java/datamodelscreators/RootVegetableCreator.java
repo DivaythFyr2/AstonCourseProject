@@ -1,6 +1,5 @@
 package datamodelscreators;
 
-import controller.Controller;
 import datamodels.RootVegetable;
 import ioData.Parser;
 import reader.*;
@@ -8,18 +7,20 @@ import reader.*;
 import java.io.File;
 import java.util.*;
 
+import static controller.Controller.checkingForAutoCompletion;
 import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MAX_WEIGHT;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MIN_WEIGHT;
 
 public class RootVegetableCreator {
-    private List<String> rootType;
-    private List<String> rootColor;
+    private final List<String> rootType;
+    private final List<String> rootColor;
 
     public RootVegetableCreator(List<String> rootType, List<String> rootColor) {
         this.rootType = rootType;
         this.rootColor = rootColor;
     }
+
     public List<RootVegetable> createAndAddRootVegetables(Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
         List<RootVegetable> rootVegetables = new ArrayList<>();
@@ -40,6 +41,7 @@ public class RootVegetableCreator {
 
         return rootVegetables;
     }
+
     public List<RootVegetable> readerFileRootVegetables(Scanner scanner) {
 
         List<RootVegetable> rootVegetables;
@@ -52,15 +54,26 @@ public class RootVegetableCreator {
         return rootVegetables;
     }
 
-    public static List<RootVegetable> generateRandomVegetables(int count, List<String> types, List<String> colors) {
+    public List<RootVegetable> generateRandomVegetables(Scanner scanner) {
+        int value;
+        while (true) {
+            System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+            String input = scanner.nextLine();
+            if (checkingForAutoCompletion(input)) {
+                value = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("Введено не корректное значение!");
+            }
+        }
         List<RootVegetable> rootVegetables = new ArrayList<>();
         Random r = new Random();
 
-        for (int i = 0; i < count; i++) {
-            String type = types.get(r.nextInt(types.size()));
+        for (int i = 0; i < value; i++) {
+            String type = rootType.get(r.nextInt(rootType.size()));
             double weight = ROOT_VEGETABLES_MIN_WEIGHT + r.nextDouble(ROOT_VEGETABLES_MAX_WEIGHT - ROOT_VEGETABLES_MIN_WEIGHT + 1);
             weight = Math.round(weight * 100) / 100.0;
-            String color = colors.get(r.nextInt(colors.size()));
+            String color = rootColor.get(r.nextInt(rootColor.size()));
 
             rootVegetables.add(new RootVegetable.RootVegetableBuilder()
                     .type(type)
@@ -68,8 +81,11 @@ public class RootVegetableCreator {
                     .color(color)
                     .build());
         }
+        System.out.println("Коллекция <Корнеплодов> создана, количество объектов - " + value);
+        System.out.println("-----------------------------------------------------");
         return rootVegetables;
     }
+
     public static RootVegetable creatingASearchObject(List<String> rootType, List<String> rootColor, Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
         String[] parse = readerUser.create(rootType, rootColor, scanner);
