@@ -36,12 +36,11 @@ public class CarController {
     static void carCreation(String type) {
         switch (type) {
             case "1":
-                CarCreator carCreator = new CarCreator(validation);
-                carCreator.createAndAddCars(database, Controller.scanner);
+                database = new CarCreator(validation).createAndAddCars(Controller.scanner);
                 actions();
                 break;
             case "2":
-//                database = Утилитный метод по заполнению из файла
+                database = new CarCreator(validation).readerFileCars(Controller.scanner);
                 actions();
                 break;
             case "3":

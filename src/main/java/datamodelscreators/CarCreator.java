@@ -3,12 +3,15 @@ package datamodelscreators;
 import datamodels.Car;
 import reader.ReaderUserCar;
 import reader.ReaderUserContext;
+import ioData.Parser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.*;
 
 public class CarCreator {
@@ -18,9 +21,10 @@ public class CarCreator {
         this.validation = validation;
     }
 
-    public void createAndAddCars(List<Car> database, Scanner scanner) {
-        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
+    public List<Car> createAndAddCars(Scanner scanner) {
 
+        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
+        List<Car> cars = new ArrayList<>();
         do {
             String[] parse = readerUser.create(validation, null, scanner);
             Car car = new Car.CarBuilder()
@@ -28,16 +32,27 @@ public class CarCreator {
                     .power(Integer.parseInt(parse[1]))
                     .yearOfManufacture(Integer.parseInt(parse[2]))
                     .build();
-            database.add(car);
+            cars.add(car);
             System.out.println(reader.StringsConsole.ADD_OK);
             System.out.println(reader.StringsConsole.ENTER_MORE);
         } while ((reader.ValidationUtils.checkInt(scanner.nextLine(), 0, 2)));
 
-        System.out.println("Коллекция из " + database.size() + " автомобилей создана!");
+        System.out.println("Коллекция из " + cars.size() + " автомобилей создана!");
         System.out.println("-----------------------------------------------------");
+        return cars;
     }
 
-    //Метод для заполнения из файла
+    public List<Car> readerFileCars(Scanner scanner) {
+
+        List<Car> cars;
+        do {
+            File file = Parser.readPath(scanner);
+            String string = Parser.readFile(file, scanner);
+            cars = Parser.parseFileCar(string, validation);
+            if (cars.isEmpty()) System.out.println(LIST_EMPTY);
+        } while (cars.isEmpty());
+        return cars;
+    }
 
     public static List<Car> generateRandomCars(int count, List<String> models) {
         List<Car> cars = new ArrayList<>();

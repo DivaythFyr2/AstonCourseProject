@@ -1,15 +1,19 @@
 package datamodelscreators;
 
 import controller.Controller;
+import datamodels.Car;
 import datamodels.RootVegetable;
+import ioData.Parser;
 import reader.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 import java.util.List;
 
+import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MAX_WEIGHT;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MIN_WEIGHT;
 
@@ -21,9 +25,10 @@ public class RootVegetableCreator {
         this.rootType = rootType;
         this.rootColor = rootColor;
     }
-    public void createAndAddRootVegetables(List<RootVegetable> database, Scanner scanner) {
-        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
+    public List<RootVegetable> createAndAddRootVegetables(Scanner scanner) {
 
+        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
+        List<RootVegetable> rootVegetables = new ArrayList<>();
         do {
             String[] parse = readerUser.create(rootType, rootColor, scanner);
             RootVegetable rootVegetable = new RootVegetable.RootVegetableBuilder()
@@ -31,16 +36,29 @@ public class RootVegetableCreator {
                     .weight(Double.parseDouble(parse[1]))
                     .color(parse[2])
                     .build();
-            database.add(rootVegetable);
+            rootVegetables.add(rootVegetable);
             System.out.println(reader.StringsConsole.ADD_OK);
             System.out.println(reader.StringsConsole.ENTER_MORE);
         } while ((reader.ValidationUtils.checkInt(scanner.nextLine(), 0, 2)));
 
-        System.out.println("Коллекция из " + database.size() + " корнеплодов создана!");
+        System.out.println("Коллекция из " + rootVegetables.size() + " корнеплодов создана!");
         System.out.println("-----------------------------------------------------");
+        return rootVegetables;
     }
 
-    //Метод для заполнения из файла
+    public List<RootVegetable> readerFileRootVegetables(Scanner scanner) {
+
+        List<RootVegetable> rootVegetables;
+        do {
+            File file = Parser.readPath(scanner);
+            String string = Parser.readFile(file, scanner);
+            rootVegetables = Parser.parseFileRootVegetable(string, rootType, rootColor);
+            if (rootVegetables.isEmpty()) System.out.println(LIST_EMPTY);
+        } while (rootVegetables.isEmpty());
+        System.out.println("Коллекция из " + rootVegetables.size() + " корнеплодов создана!");
+        System.out.println("-----------------------------------------------------");
+        return rootVegetables;
+    }
 
     public static List<RootVegetable> generateRandomVegetables(int count, List<String> types, List<String> colors) {
         List<RootVegetable> rootVegetables = new ArrayList<>();

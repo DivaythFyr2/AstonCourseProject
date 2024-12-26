@@ -35,12 +35,12 @@ public class RootVegetableController {
     public static void rootVegetableCreation(String type) {
         switch (type) {
             case "1":
-                RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType, rootColor);
-                rootVegetableCreator.createAndAddRootVegetables(database, Controller.scanner);
+                database = new RootVegetableCreator(rootType, rootColor).createAndAddRootVegetables(Controller.scanner);
                 actions();
                 break;
             case "2":
-                // Утилитный метод по заполнению из файла
+                database = new RootVegetableCreator(rootType, rootColor).readerFileRootVegetables(Controller.scanner);
+                actions();
                 break;
             case "3":
                 while (true) {
