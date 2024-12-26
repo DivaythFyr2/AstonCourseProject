@@ -10,6 +10,7 @@ import static reader.ValidationConstants.*;
 
 public class CarCreatorUtil {
     private static final String CARS_EXTERNAL_FILE = "src/main/resources/External/Cars.txt";
+    private static final String CARS_EXTERNAL_OUTPUT_FILE = "src/main/resources/External/CarsOutput.txt";
     private static final String CARS_MANUFACTURES_FILE = "src/main/resources/Manufactures/Car Manufacturers.txt";
 
     public static List<Car> addRandomsCars(int count) {
@@ -22,10 +23,10 @@ public class CarCreatorUtil {
         for (int element = 0; element < count; element++) {
             int rnd = (int) (Math.random() * arr2D.length);
             String model = arr2D[rnd][0];
-            int power = IOManager.parseInt(arr2D[rnd][1]) ;
-            int yearOfManufacture = Integer.parseInt(arr2D[rnd][2]) ;
+            double power = IOManager.parseDouble(arr2D[rnd][1]);
+            int yearOfManufacture = Integer.parseInt(arr2D[rnd][2]);
 
-            carList.add(addNewCar(model, power, yearOfManufacture)) ;
+            carList.add(addNewCar(model, power, yearOfManufacture));
         }
         return carList;
     }
@@ -43,8 +44,8 @@ public class CarCreatorUtil {
         }
         for (int element = 0; element < arr2D.length; element++) {
             String model = arr2D[element][0];
-            int power = IOManager.parseInt(arr2D[element][1]) ;
-            int yearOfManufacture = Integer.parseInt(arr2D[element][2]) ;
+            double power = IOManager.parseDouble(arr2D[element][1]);
+            int yearOfManufacture = Integer.parseInt(arr2D[element][2]);
 
             carList.add(addNewCar(model, power, yearOfManufacture));
         }
@@ -52,7 +53,7 @@ public class CarCreatorUtil {
     }
 
 
-    public static Car addNewCar(String model, int power, int yearOfManufacture) {
+    public static Car addNewCar(String model, double power, int yearOfManufacture) {
         if (ValidationUtils.checkString(model, IOManager.getCarsNamesToList())
                 && ValidationUtils.checkDouble(String.valueOf(power), CAR_MIN_POWER, CAR_MAX_POWER)
                 && ValidationUtils.checkInt(String.valueOf(yearOfManufacture), CAR_MIN_YEAR, CAR_MAX_YEAR)) {
@@ -69,4 +70,24 @@ public class CarCreatorUtil {
         }
         return null;
     }
+
+    public static boolean appendCarListInTXTFile(List<Car> cars, String fileName) {
+        if (cars == null) {
+            System.err.println("CarCreatorUtil: List<Car> is NULL.");
+            return false;
+        }
+        for (Car car : cars) {
+            String outputData = String.valueOf(car.getModel())
+                    + ";" + String.valueOf(car.getPower())
+                    + ";" + String.valueOf(car.getYearOfManufacture());
+
+            boolean result = IOManager.appendStringToTXTFile(outputData, fileName);
+        }
+        return true;
+    }
+
+    public static boolean appendCarListInTXTFile(List<Car> cars) {
+        return appendCarListInTXTFile(cars, CARS_EXTERNAL_OUTPUT_FILE);
+    }
+
 }

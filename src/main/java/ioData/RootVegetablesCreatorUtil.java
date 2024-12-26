@@ -1,5 +1,6 @@
 package ioData;
 
+import datamodels.Book;
 import datamodels.RootVegetable;
 import reader.ValidationUtils;
 
@@ -11,6 +12,7 @@ import static reader.ValidationConstants.*;
 public class RootVegetablesCreatorUtil {
     private static final String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
     private static final String VEGETABLES_MANUFACTURES_FILE = "src/main/resources/Manufactures/Root vegetable Manufactures.txt";
+    private static final String VEGETABLES_EXTERNAL_OUTPUT_FILE = "src/main/resources/External/RootVegetablesOutput.txt";
 
 
     public static List<RootVegetable> addRandomsRootVegetables(int count) {
@@ -71,4 +73,24 @@ public class RootVegetablesCreatorUtil {
         }
         return null;
     }
+
+    public static boolean appendRootVegetableListInTXTFile(List<RootVegetable> rootVegetables, String fileName) {
+        if (rootVegetables == null) {
+            System.err.println("RootVegetableCreatorUtil: List<RootVegetable> is NULL.");
+            return false;
+        }
+        for (RootVegetable rootVegetable : rootVegetables) {
+            String outputData = String.valueOf(rootVegetable.getType())
+                    + ";" + String.valueOf(rootVegetable.getWeight())
+                    + ";" + String.valueOf(rootVegetable.getColor());
+
+            boolean result = IOManager.appendStringToTXTFile(outputData, fileName);
+        }
+        return true;
+    }
+
+    public static boolean appendRootVegetableListInTXTFile(List<RootVegetable> rootVegetables) {
+        return appendRootVegetableListInTXTFile(rootVegetables, VEGETABLES_EXTERNAL_OUTPUT_FILE);
+    }
+
 }

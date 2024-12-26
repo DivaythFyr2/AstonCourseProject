@@ -1,6 +1,7 @@
 package ioData;
 
 import datamodels.Book;
+import datamodels.Car;
 import reader.ValidationUtils;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class BookCreatorUtil {
 
     private static final String BOOKS_EXTERNAL_FILE = "src/main/resources/External/Books.txt";
     private static final String BOOKS_MANUFACTURES_FILE = "src/main/resources/Manufactures/Book Manufactures.txt";
+    private static final String  BOOKS_EXTERNAL_OUTPUT_FILE= "src/main/resources/External/BooksOut.txt";
 
     public static List<Book>  addRandomsBooks(int count){
         String[][] arr2D = IOManager.readDataFromTXTFileTo2DArray(BOOKS_MANUFACTURES_FILE);
@@ -68,6 +70,25 @@ public class BookCreatorUtil {
             System.err.println("BookCreatorUtil: One of data in [" + title + " " + author + " " + pageCount + "] is not valid.");
         }
         return null;
+    }
+
+    public static boolean appendBookListInTXTFile(List<Book> books, String fileName) {
+        if (books == null) {
+            System.err.println("BookCreatorUtil: List<Book> is NULL.");
+            return false;
+        }
+        for (Book book : books) {
+            String outputData = String.valueOf(book.getTitle())
+                    + ";" + String.valueOf(book.getAuthor())
+                    + ";" + String.valueOf(book.getPageCount());
+
+            boolean result = IOManager.appendStringToTXTFile(outputData, fileName);
+        }
+        return true;
+    }
+
+    public static boolean appendBookListInTXTFile(List<Book> books) {
+        return appendBookListInTXTFile(books, BOOKS_EXTERNAL_OUTPUT_FILE);
     }
 
 }

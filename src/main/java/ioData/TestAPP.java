@@ -18,14 +18,22 @@ public class TestAPP {
         String BOOKS_MANUFACTURES_FILE = "src/main/resources/Manufactures/Book Manufactures.txt";
         String VEGETABLES_EXTERNAL_FILE = "src/main/resources/External/RootVegetables.txt";
         String VEGETABLES_MANUFACTURES_FILE = "src/main/resources/Manufactures/Root vegetable Manufactures.txt";
+        String CARS_EXTERNAL_OUTPUT_FILE = "src/main/resources/External/CarsOutput.txt";
 
 
-//        List<RootVegetable> rootVegetableList = RootVegetablesCreatorUtil.addRandomsRootVegetables(3);
-//        System.out.println(rootVegetableList);
+
+        List<RootVegetable> rootVegetableList = RootVegetablesCreatorUtil.addRandomsRootVegetables(3);
+        System.out.println(RootVegetablesCreatorUtil.appendRootVegetableListInTXTFile(rootVegetableList));
+//
 //        List<Book> books = BookCreatorUtil.addRandomsBooks(2);
-//        System.out.println(books);
+//        System.out.println(BookCreatorUtil.appendBookListInTXTFile(books));
 //        List<Car> carList = CarCreatorUtil.addRandomsCars(3);
-//        System.out.println(carList);
+//        System.out.println(CarCreatorUtil.appendCarListInTXTFile(carList));
+
+
+//        IOManager.appendStringToTXTFile(CARS_EXTERNAL_OUTPUT_FILE, "text111");
+
+
         //        CarCreatorUtil.addCarsFromTXTFile();
 //        CarCreatorUtil.addRandomsCars(3);
 //        BookCreatorUtil.addBooksFromTXTFile();

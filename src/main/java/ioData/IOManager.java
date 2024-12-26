@@ -89,7 +89,7 @@ public class IOManager {
         }
     }
 
-    public static boolean appendDataToTXTFile(String fileName, String text) {
+    public static boolean appendStringToTXTFile(String text, String fileName) {
         try {
             new File(fileName).createNewFile();
             text += "\n";
@@ -101,7 +101,7 @@ public class IOManager {
         return false;
     }
 
-    public static boolean appendDataToTXTFile(String fileName, List<String> list) {
+    public static boolean appendStringToTXTFile(String fileName, List<String> list) {
         try {
             new File(fileName).createNewFile();
             Files.write(Paths.get(fileName), list, StandardOpenOption.APPEND);

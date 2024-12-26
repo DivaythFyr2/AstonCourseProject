@@ -37,7 +37,7 @@ public class Car {
 
     public static class CarBuilder {
         private String model;
-        private int power;
+        private double power;
         private int yearOfManufacture;
 
         public CarBuilder model(String model) {
@@ -45,7 +45,7 @@ public class Car {
             return this;
         }
 
-        public CarBuilder power(int power) {
+        public CarBuilder power(double power) {
             this.power = power;
             return this;
         }
