@@ -7,38 +7,35 @@ import datamodels.RootVegetable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.compare;
-
 public class CustomSort<T> {
     public void sort(List<T> items) {
-        // Сначала создаем массив для хранения четных значений и их индексов
-        ArrayList<T> evenItems = new ArrayList<>();
-        ArrayList<Integer> evenIndices = new ArrayList<>();
-        // Заполняем массив четными элементами и запоминаем их индексы
+        // Список для хранения четных значений и их индексов
+        ArrayList<T> listItems = new ArrayList<>();
+        ArrayList<Integer> listIndex = new ArrayList<>();
+        // Заполняем список четными элементами и запоминаем их индексы
         for (int i = 0; i < items.size(); i++) {
             T item = items.get(i);
             if ((item instanceof Car && ((Car) item).getPower() % 2 == 0) ||
                     (item instanceof Book && ((Book) item).getPageCount() % 2 == 0) ||
                     (item instanceof RootVegetable && ((RootVegetable) item).getWeight() % 2 == 0)) {
-                evenItems.add(item);
-                evenIndices.add(i);
+                listItems.add(item);
+                listIndex.add(i);
             }
         }
-        // Сортируем четные элементы
-        for (int i = 0; i < evenItems.size(); i++) {
-            for (int j = i + 1; j < evenItems.size(); j++) {
-                if (compare(evenItems.get(i), evenItems.get(j)) > 0) {
+        // Сортируем четные элементы (алгоритм пузырьковой сортировки)
+        for (int i = 0; i < listItems.size(); i++) {
+            for (int j = i + 1; j < listItems.size(); j++) {
+                if (compare(listItems.get(i), listItems.get(j)) > 0) {
                     // Меняем местами элементы
-                    T temp = evenItems.get(i);
-                    evenItems.set(i, evenItems.get(j));
-                    evenItems.set(j, temp);
+                    T temp = listItems.get(i);
+                    listItems.set(i, listItems.get(j));
+                    listItems.set(j, temp);
                 }
             }
         }
-
         // Вставляем отсортированные четные элементы обратно в оригинальный список
-        for (int i = 0; i < evenIndices.size(); i++) {
-            items.set(evenIndices.get(i), evenItems.get(i));
+        for (int i = 0; i < listIndex.size(); i++) {
+            items.set(listIndex.get(i), listItems.get(i));
         }
     }
 
