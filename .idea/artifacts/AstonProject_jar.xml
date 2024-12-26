@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AstonProject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AstonProject_jar</output-path>
+    <root id="archive" name="AstonProject.jar">
+      <element id="module-output" name="AstonProject" />
+    </root>
+  </artifact>
+</component>

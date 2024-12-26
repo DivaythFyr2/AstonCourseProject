@@ -1,9 +1,7 @@
 package controller;
 
 import datamodels.Car;
-import random.RandomCarGenerator;
-import reader.ReaderUserCar;
-import reader.ReaderUserContext;
+import datamodelscreators.CarCreator;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
@@ -11,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -36,21 +33,11 @@ public class CarController {
     private CarController() {
     }
 
-    static void creatingASearchObject(String type) {
+    static void carCreation(String type) {
         switch (type) {
             case "1":
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
-                do {
-                    String[] parse = readerUser.create(validation, null, Controller.scanner);
-                    database.add(new Car.CarBuilder()
-                            .model(parse[0])
-                            .power(Integer.parseInt(parse[1]))
-                            .yearOfManufacture(Integer.parseInt(parse[2]))
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                System.out.println("Коллекция из " + database.size() + " автомобилей создана!");
-                System.out.println("-----------------------------------------------------");
+                CarCreator carCreator = new CarCreator(validation);
+                carCreator.createAndAddCars(database, Controller.scanner);
                 actions();
                 break;
             case "2":
@@ -63,7 +50,7 @@ public class CarController {
                     String input = Controller.scanner.nextLine();
                     if (checkingForAutoCompletion(input)) {
                         int value = Integer.parseInt(input);
-                        database = RandomCarGenerator.generateRandomCars(value, validation);
+                        database = CarCreator.generateRandomCars(value, validation);
                         System.out.println("Коллекция <Автомобилей> создана, количество объектов - " + value);
                         System.out.println("-----------------------------------------------------");
                         break;
@@ -90,7 +77,7 @@ public class CarController {
             if (isRes0_5(input)) {
                 switch (input) {
                     case "1":
-                        ShellSort.shellSort(database, byModel());
+                        ShellSort.shellSort(database, Car.byModel());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Марке>\s
@@ -100,7 +87,7 @@ public class CarController {
                         actions();
                         break;
                     case "2":
-                        ShellSort.shellSort(database, byPower());
+                        ShellSort.shellSort(database, Car.byPower());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция умпешно отсортирована по <Мощности>\s
@@ -110,7 +97,7 @@ public class CarController {
                         actions();
                         break;
                     case "3":
-                        ShellSort.shellSort(database, byYearOfManufacture());
+                        ShellSort.shellSort(database, Car.byYearOfManufacture());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция умпешно отсортирована по <Году производства>\s
@@ -121,7 +108,7 @@ public class CarController {
                         break;
                     case "4":
                         if (isSort) {
-                            Car car = creatingASearchObject();
+                            Car car = CarCreator.creatingASearchObject(validation,Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, car);
                             printObject(resultIndex, database);
                         } else {
@@ -160,30 +147,5 @@ public class CarController {
             System.out.println(counter++ + ". " + car.toString());
         }
         System.out.println("--------------------------------------------------------------------");
-    }
-
-    private static Car creatingASearchObject() {
-        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserCar());
-        String[] parse = readerUser.create(validation, null, Controller.scanner);
-        return new Car.CarBuilder()
-                .model(parse[0])
-                .power(Integer.parseInt(parse[1]))
-                .yearOfManufacture(Integer.parseInt(parse[2]))
-                .build();
-    }
-
-    // Компаратор по модели
-    private static Comparator<Car> byModel() {
-        return Comparator.comparing(Car::getModel);
-    }
-
-    // Компаратор по мощности
-    private static Comparator<Car> byPower() {
-        return Comparator.comparingInt(Car::getPower);
-    }
-
-    // Компаратор по году изготовления
-    private static Comparator<Car> byYearOfManufacture() {
-        return Comparator.comparingInt(Car::getYearOfManufacture);
     }
 }

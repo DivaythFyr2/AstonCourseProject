@@ -1,5 +1,7 @@
 package datamodels;
 
+import java.util.Comparator;
+
 public class RootVegetable implements Comparable<RootVegetable> {
     private final String type;
     private final double weight;
@@ -23,6 +25,17 @@ public class RootVegetable implements Comparable<RootVegetable> {
         return color;
     }
 
+    public static Comparator<RootVegetable> byType() {
+        return Comparator.comparing(RootVegetable::getType);
+    }
+
+    public static Comparator<RootVegetable> byColor() {
+        return Comparator.comparing(RootVegetable::getColor);
+    }
+
+    public static Comparator<RootVegetable> byWeight() {
+        return Comparator.comparingDouble(RootVegetable::getWeight);
+    }
 
     @Override
     public String toString() {

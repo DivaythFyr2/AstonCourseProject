@@ -18,7 +18,7 @@ public class Controller {
                 switch (input) {
                     case "1":
                         System.out.println("Выбран класс <Автомобиль>");
-                        CarController.creatingASearchObject(completion());
+                        CarController.carCreation(completion());
                         break;
                     case "2":
                         System.out.println("Выбран класс <Книги>");

@@ -5,7 +5,7 @@ public final class ValidationConstants {
     private ValidationConstants() {}
 
     public static final int CAR_MIN_POWER = 25;
-    public static final int CAR_MAX_POWER = 2000;
+    public static final int CAR_MAX_POWER = 1000;
     public static final int CAR_MIN_YEAR = 1885;
     public static final int CAR_MAX_YEAR = 2025;
 

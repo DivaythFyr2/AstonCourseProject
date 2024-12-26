@@ -1,7 +1,7 @@
 package controller;
 
 import datamodels.RootVegetable;
-import random.RandomRootVegetableGenerator;
+import datamodelscreators.RootVegetableCreator;
 import reader.ReaderUserContext;
 import reader.ReaderUserRootVegetables;
 import searchItems.BinarySearcher;
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static controller.Controller.checkingForAutoCompletion;
@@ -36,18 +35,8 @@ public class RootVegetableController {
     public static void rootVegetableCreation(String type) {
         switch (type) {
             case "1":
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
-                do {
-                    String[] parse = readerUser.create(rootType, rootColor, Controller.scanner);
-                    database.add(new RootVegetable.RootVegetableBuilder()
-                            .type(parse[0])
-                            .weight(Double.parseDouble(parse[1]))
-                            .color(parse[2])
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                System.out.println("Коллекция из " + database.size() + " корнеплодов создана!");
-                System.out.println("-----------------------------------------------------");
+                RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType, rootColor);
+                rootVegetableCreator.createAndAddRootVegetables(database, Controller.scanner);
                 actions();
                 break;
             case "2":
@@ -59,7 +48,7 @@ public class RootVegetableController {
                     String input = Controller.scanner.nextLine();
                     if (checkingForAutoCompletion(input)) {
                         int value = Integer.parseInt(input);
-                        database = RandomRootVegetableGenerator.generateRandomVegetables(value, rootType, rootColor);
+                        database = RootVegetableCreator.generateRandomVegetables(value, rootType, rootColor);
                         System.out.println("Коллекция <Корнеплодов> создана, количество объектов - " + value);
                         System.out.println("-----------------------------------------------------");
                         break;
@@ -86,7 +75,7 @@ public class RootVegetableController {
             if (Controller.isRes0_5(input)) {
                 switch (input) {
                     case "1":
-                        ShellSort.shellSort(database, byType());
+                        ShellSort.shellSort(database, RootVegetable.byType());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Типу>\s
@@ -96,7 +85,7 @@ public class RootVegetableController {
                         actions();
                         break;
                     case "2":
-                        ShellSort.shellSort(database, byColor());
+                        ShellSort.shellSort(database, RootVegetable.byColor());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Цвету>\s
@@ -106,7 +95,7 @@ public class RootVegetableController {
                         actions();
                         break;
                     case "3":
-                        ShellSort.shellSort(database, byWeight());
+                        ShellSort.shellSort(database, RootVegetable.byWeight());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Весу>\s
@@ -117,7 +106,7 @@ public class RootVegetableController {
                         break;
                     case "4":
                         if (isSort) {
-                            RootVegetable rootVegetable = creatingASearchObject();
+                            RootVegetable rootVegetable = RootVegetableCreator.creatingASearchObject(rootType,rootColor,Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
                             printObject(resultIndex, database);
                         } else {
@@ -171,30 +160,5 @@ public class RootVegetableController {
             System.out.println(counter++ + ". " + rootVegetable.toString());
         }
         System.out.println("--------------------------------------------------------------------");
-    }
-
-    private static RootVegetable creatingASearchObject() {
-        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
-        String[] parse = readerUser.create(rootType, rootColor, Controller.scanner);
-        return new RootVegetable.RootVegetableBuilder()
-                .type(parse[0])
-                .weight(Double.parseDouble(parse[1]))
-                .color(parse[2])
-                .build();
-    }
-
-    // Компаратор по Типу
-    private static Comparator<RootVegetable> byType() {
-        return Comparator.comparing(RootVegetable::getType);
-    }
-
-    // Компаратор по Цвету
-    private static Comparator<RootVegetable> byColor() {
-        return Comparator.comparing(RootVegetable::getColor);
-    }
-
-    // Компаратор по Весу
-    private static Comparator<RootVegetable> byWeight() {
-        return Comparator.comparingDouble(RootVegetable::getWeight);
     }
 }

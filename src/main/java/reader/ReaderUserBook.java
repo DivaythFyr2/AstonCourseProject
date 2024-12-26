@@ -33,7 +33,6 @@ public final class ReaderUserBook implements ReaderStrategy {
             }
             strings[i] = input;
         }
-        System.out.println(ADD_OK);
         return strings;
     }
 }

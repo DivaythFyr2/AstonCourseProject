@@ -1,5 +1,7 @@
 package datamodels;
 
+import java.util.Comparator;
+
 public class Car implements Comparable<Car> {
     private final String model;
     private final int power;
@@ -23,6 +25,17 @@ public class Car implements Comparable<Car> {
         return yearOfManufacture;
     }
 
+    public static Comparator<Car> byModel() {
+        return Comparator.comparing(Car::getModel);
+    }
+
+    public static Comparator<Car> byPower() {
+        return Comparator.comparingInt(Car::getPower);
+    }
+
+    public static Comparator<Car> byYearOfManufacture() {
+        return Comparator.comparingInt(Car::getYearOfManufacture);
+    }
 
     @Override
     public String toString() {

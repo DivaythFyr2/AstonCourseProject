@@ -1,9 +1,7 @@
 package controller;
 
 import datamodels.Book;
-import random.RandomBookGenerator;
-import reader.ReaderUserBook;
-import reader.ReaderUserContext;
+import datamodelscreators.BookCreator;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
@@ -11,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import static controller.Controller.checkingForAutoCompletion;
@@ -36,18 +33,8 @@ public class BookController {
     static void bookCreation(String type) {
         switch (type) {
             case "1":
-                ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
-                do {
-                    String[] parse = readerUser.create(titles, authors, Controller.scanner);
-                    database.add(new Book.BookBuilder()
-                            .title(parse[0])
-                            .author(parse[1])
-                            .pageCount(Integer.parseInt(parse[2]))
-                            .build());
-                    System.out.println(reader.StringsConsole.ENTER_MORE);
-                } while ((reader.ValidationUtils.checkInt(Controller.scanner.nextLine(), 0, 2)));
-                System.out.println("Коллекция из " + database.size() + " книг создана!");
-                System.out.println("-----------------------------------------------------");
+                BookCreator bookCreator = new BookCreator(titles, authors);
+                bookCreator.createAndAddBooks(database, Controller.scanner);
                 actions();
                 break;
             case "2":
@@ -60,7 +47,7 @@ public class BookController {
                     String input = Controller.scanner.nextLine();
                     if (checkingForAutoCompletion(input)) {
                         int value = Integer.parseInt(input);
-                        database = RandomBookGenerator.generateRandomBooks(value, titles, authors);
+                        database = BookCreator.generateRandomBooks(value, titles, authors);
                         System.out.println("Коллекция <Книг> создана, количество объектов - " + value);
                         System.out.println("-----------------------------------------------------");
                         break;
@@ -87,7 +74,7 @@ public class BookController {
             if (Controller.isRes0_5(input)) {
                 switch (input) {
                     case "1":
-                        ShellSort.shellSort(database, byTittle());
+                        ShellSort.shellSort(database, Book.byTittle());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Названиям>\s
@@ -97,7 +84,7 @@ public class BookController {
                         actions();
                         break;
                     case "2":
-                        ShellSort.shellSort(database, byAuthor());
+                        ShellSort.shellSort(database, Book.byAuthor());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Автору>\s
@@ -107,7 +94,7 @@ public class BookController {
                         isSort = false;
                         break;
                     case "3":
-                        ShellSort.shellSort(database, byPageCount());
+                        ShellSort.shellSort(database, Book.byPageCount());
                         System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Количеству страниц>\s
@@ -118,7 +105,7 @@ public class BookController {
                         break;
                     case "4":
                         if (isSort) {
-                            Book book = creatingASearchObject();
+                            Book book = BookCreator.creatingASearchObject(titles,authors,Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, book);
                             printObject(resultIndex, database);
                         } else {
@@ -173,30 +160,4 @@ public class BookController {
         }
         System.out.println("--------------------------------------------------------------------");
     }
-
-    private static Book creatingASearchObject() {
-        ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
-        String[] parse = readerUser.create(titles, authors, Controller.scanner);
-        return new Book.BookBuilder()
-                .title(parse[0])
-                .author(parse[1])
-                .pageCount(Integer.parseInt(parse[2]))
-                .build();
-    }
-
-    // Компаратор по названию
-    private static Comparator<Book> byTittle() {
-        return Comparator.comparing(Book::getTitle);
-    }
-
-    // Компаратор по автору
-    private static Comparator<Book> byAuthor() {
-        return Comparator.comparing(Book::getAuthor);
-    }
-
-    // Компаратор по количеству страниц
-    private static Comparator<Book> byPageCount() {
-        return Comparator.comparingInt(Book::getPageCount);
-    }
 }
-

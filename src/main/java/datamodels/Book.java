@@ -1,5 +1,7 @@
 package datamodels;
 
+import java.util.Comparator;
+
 public class Book implements Comparable<Book> {
     private final String title;
     private final String author;
@@ -22,6 +24,18 @@ public class Book implements Comparable<Book> {
 
     public int getPageCount() {
         return pageCount;
+    }
+
+    public static Comparator<Book> byTittle() {
+        return Comparator.comparing(Book::getTitle);
+    }
+
+    public static Comparator<Book> byAuthor() {
+        return Comparator.comparing(Book::getAuthor);
+    }
+
+    public static Comparator<Book> byPageCount() {
+        return Comparator.comparingInt(Book::getPageCount);
     }
 
     @Override
