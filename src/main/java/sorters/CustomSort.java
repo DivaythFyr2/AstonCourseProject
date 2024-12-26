@@ -11,7 +11,7 @@ public class CustomSort<T> {
 
     //  определение четных и нечетных элементов и добавление их в список
     public void sort(List<T> items) {
-        ArrayList<T> evenValues = new ArrayList<>();
+        List<T> evenValues = new ArrayList<>();
         // Заполнение списка четными элементами
         for (T item : items) {
             if (item instanceof Car && ((Car) item).getPower() % 2 == 0) {
