@@ -38,6 +38,7 @@ public class RootVegetableController {
                 break;
             case "2":
                 database = new RootVegetableCreator(rootType, rootColor).readerFileRootVegetables(Controller.scanner);
+                actions();
                 break;
             case "3":
                 while (true) {

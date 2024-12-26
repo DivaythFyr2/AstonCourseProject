@@ -1,5 +1,7 @@
 package reader;
 
+import controller.Controller;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,15 +21,24 @@ public final class ReaderUserCar implements ReaderStrategy {
             while (true) {
                 input = scanner.nextLine();
                 if (i == 0) {
-                    if (!checkString(input, list)) System.out.println(FAIL + CAR[i]);
+                    if (!checkString(input, list)) {
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + CAR[i]);
+                    }
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER)) System.out.println(FAIL + CAR[i]);
+                    if (!checkInt(input, CAR_MIN_POWER, CAR_MAX_POWER)) {
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + CAR[i]);
+                    }
                     else break;
                 }
                 if (i == 2) {
-                    if (!checkInt(input, CAR_MIN_YEAR, CAR_MAX_YEAR)) System.out.println(FAIL + CAR[i]);
+                    if (!checkInt(input, CAR_MIN_YEAR, CAR_MAX_YEAR)) {
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + CAR[i]);
+                    }
                     else break;
                 }
             }

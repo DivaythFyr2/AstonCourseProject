@@ -1,5 +1,7 @@
 package reader;
 
+import controller.Controller;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,15 +21,24 @@ public final class ReaderUserBook implements ReaderStrategy {
             while (true) {
                 input = scanner.nextLine();
                 if (i == 0) {
-                    if (!checkString(input, list)) System.out.println(FAIL + BOOK[i]);
+                    if (!checkString(input, list)){
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + BOOK[i]);
+                    }
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkString(input, list2)) System.out.println(FAIL + BOOK[i]);
+                    if (!checkString(input, list2)) {
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + BOOK[i]);
+                    }
                     else break;
                 }
                 if (i == 2) {
-                    if (!checkInt(input, BOOK_MIN_PAGE, BOOK_MAX_PAGE)) System.out.println(FAIL + BOOK[i]);
+                    if (!checkInt(input, BOOK_MIN_PAGE, BOOK_MAX_PAGE)){
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + BOOK[i]);
+                    }
                     else break;
                 }
             }

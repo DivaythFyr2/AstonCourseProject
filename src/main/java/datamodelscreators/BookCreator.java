@@ -30,8 +30,8 @@ public class BookCreator {
         do {
             String[] parse = readerUser.create(titles, authors, scanner);
             books.add(new Book.BookBuilder()
-                    .title(parse[0])
-                    .author(parse[1])
+                    .title(parse[0].toUpperCase())
+                    .author(parse[1].toUpperCase())
                     .pageCount(Integer.parseInt(parse[2]))
                     .build());
             System.out.println(reader.StringsConsole.ADD_OK);
@@ -47,7 +47,7 @@ public class BookCreator {
         List<Book> books;
         do {
             File file = Parser.readPath(scanner);
-            String string = Parser.readFile(file, scanner);
+            String string = Parser.readFile(file, scanner).toUpperCase();
             books = Parser.parseFileBook(string, titles, authors);
             if (books.isEmpty()) System.out.println(LIST_EMPTY);
         } while (books.isEmpty());

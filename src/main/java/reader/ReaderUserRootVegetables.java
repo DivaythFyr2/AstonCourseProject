@@ -1,5 +1,7 @@
 package reader;
 
+import controller.Controller;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,16 +21,24 @@ public final class ReaderUserRootVegetables implements ReaderStrategy {
             while (true) {
                 input = scanner.nextLine();
                 if (i == 0) {
-                    if (!checkString(input, list)) System.out.println(FAIL + ROOT_VEGETABLES[i]);
+                    if (!checkString(input, list)){
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + ROOT_VEGETABLES[i]);
+                    }
                     else break;
                 }
                 if (i == 1) {
-                    if (!checkDouble(input, ROOT_VEGETABLES_MIN_WEIGHT, ROOT_VEGETABLES_MAX_WEIGHT))
+                    if (!checkDouble(input, ROOT_VEGETABLES_MIN_WEIGHT, ROOT_VEGETABLES_MAX_WEIGHT)) {
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
                         System.out.println(FAIL + ROOT_VEGETABLES[i]);
+                    }
                     else break;
                 }
                 if (i == 2) {
-                    if (!checkString(input, list2)) System.out.println(FAIL + ROOT_VEGETABLES[i]);
+                    if (!checkString(input, list2)){
+                        if (input.equalsIgnoreCase(BACK)) Controller.completion();
+                        System.out.println(FAIL + ROOT_VEGETABLES[i]);
+                    }
                     else break;
                 }
             }

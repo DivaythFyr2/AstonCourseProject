@@ -6,11 +6,7 @@ import ioData.Parser;
 import reader.*;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
-
-import java.util.List;
+import java.util.*;
 
 import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MAX_WEIGHT;
@@ -30,9 +26,9 @@ public class RootVegetableCreator {
         do {
             String[] parse = readerUser.create(rootType, rootColor, scanner);
             RootVegetable rootVegetable = new RootVegetable.RootVegetableBuilder()
-                    .type(parse[0])
+                    .type(parse[0].toUpperCase())
                     .weight(Double.parseDouble(parse[1]))
-                    .color(parse[2])
+                    .color(parse[2].toUpperCase())
                     .build();
             rootVegetables.add(rootVegetable);
             System.out.println(reader.StringsConsole.ADD_OK);
@@ -49,7 +45,7 @@ public class RootVegetableCreator {
         List<RootVegetable> rootVegetables;
         do {
             File file = Parser.readPath(scanner);
-            String string = Parser.readFile(file, scanner);
+            String string = Parser.readFile(file, scanner).toUpperCase();
             rootVegetables = Parser.parseFileRootVegetable(string, rootType, rootColor);
             if (rootVegetables.isEmpty()) System.out.println(LIST_EMPTY);
         } while (rootVegetables.isEmpty());

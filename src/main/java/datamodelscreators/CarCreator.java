@@ -27,7 +27,7 @@ public class CarCreator {
         do {
             String[] parse = readerUser.create(validation, null, scanner);
             Car car = new Car.CarBuilder()
-                    .model(parse[0])
+                    .model(parse[0].toUpperCase())
                     .power(Integer.parseInt(parse[1]))
                     .yearOfManufacture(Integer.parseInt(parse[2]))
                     .build();
@@ -46,7 +46,7 @@ public class CarCreator {
         List<Car> cars;
         do {
             File file = Parser.readPath(scanner);
-            String string = Parser.readFile(file, scanner);
+            String string = Parser.readFile(file, scanner).toUpperCase();
             cars = Parser.parseFileCar(string, validation);
             if (cars.isEmpty()) System.out.println(LIST_EMPTY);
         } while (cars.isEmpty());

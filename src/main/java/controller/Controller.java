@@ -37,7 +37,7 @@ public class Controller {
         }
     }
 
-    private static String completion() {
+    public static String completion() {
         String result;
         Global:
         while (true) {
