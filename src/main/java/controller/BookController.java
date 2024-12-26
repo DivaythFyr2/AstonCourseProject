@@ -33,12 +33,11 @@ public class BookController {
     static void bookCreation(String type) {
         switch (type) {
             case "1":
-                BookCreator bookCreator = new BookCreator(titles, authors);
-                bookCreator.createAndAddBooks(database, Controller.scanner);
+                database = new BookCreator(titles, authors).createAndAddBooks(Controller.scanner);
                 actions();
                 break;
             case "2":
-//                database = Утилитный метод по заполнению из файла
+                database = new BookCreator(titles, authors).readerFileBooks(Controller.scanner);
                 actions();
                 break;
             case "3":

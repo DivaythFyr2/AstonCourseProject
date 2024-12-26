@@ -2,8 +2,6 @@ package controller;
 
 import datamodels.RootVegetable;
 import datamodelscreators.RootVegetableCreator;
-import reader.ReaderUserContext;
-import reader.ReaderUserRootVegetables;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
@@ -35,12 +33,11 @@ public class RootVegetableController {
     public static void rootVegetableCreation(String type) {
         switch (type) {
             case "1":
-                RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType, rootColor);
-                rootVegetableCreator.createAndAddRootVegetables(database, Controller.scanner);
+                database = new RootVegetableCreator(rootType, rootColor).createAndAddRootVegetables(Controller.scanner);
                 actions();
                 break;
             case "2":
-                // Утилитный метод по заполнению из файла
+                database = new RootVegetableCreator(rootType, rootColor).readerFileRootVegetables(Controller.scanner);
                 break;
             case "3":
                 while (true) {

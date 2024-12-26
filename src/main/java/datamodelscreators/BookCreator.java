@@ -1,16 +1,18 @@
 package datamodelscreators;
 
 import datamodels.Book;
+import ioData.Parser;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import static reader.StringsConsole.*;
 
-import static reader.ValidationConstants.BOOK_MAX_PAGE;
-import static reader.ValidationConstants.BOOK_MIN_PAGE;
+import static reader.ValidationConstants.*;
 
 public class BookCreator {
     private List<String> titles;
@@ -21,11 +23,13 @@ public class BookCreator {
         this.authors = authors;
     }
 
-    public void createAndAddBooks(List<Book> database, Scanner scanner) {
+    public List<Book> createAndAddBooks(Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
+        List<Book> books = new ArrayList<>();
+
         do {
             String[] parse = readerUser.create(titles, authors, scanner);
-            database.add(new Book.BookBuilder()
+            books.add(new Book.BookBuilder()
                     .title(parse[0])
                     .author(parse[1])
                     .pageCount(Integer.parseInt(parse[2]))
@@ -33,11 +37,22 @@ public class BookCreator {
             System.out.println(reader.StringsConsole.ADD_OK);
             System.out.println(reader.StringsConsole.ENTER_MORE);
         } while ((reader.ValidationUtils.checkInt(scanner.nextLine(), 0, 2)));
-        System.out.println("Коллекция из " + database.size() + " книг создана!");
+        System.out.println("Коллекция из " + books.size() + " книг создана!");
         System.out.println("-----------------------------------------------------");
-    }
 
-    //Метод для заполнения из файла
+        return books;
+    }
+    public List<Book> readerFileBooks(Scanner scanner) {
+
+        List<Book> books;
+        do {
+            File file = Parser.readPath(scanner);
+            String string = Parser.readFile(file, scanner);
+            books = Parser.parseFileBook(string, titles, authors);
+            if (books.isEmpty()) System.out.println(LIST_EMPTY);
+        } while (books.isEmpty());
+        return books;
+    }
 
     public static List<Book> generateRandomBooks(int count, List<String> titles, List<String> authors) {
         List<Book> books = new ArrayList<>();
