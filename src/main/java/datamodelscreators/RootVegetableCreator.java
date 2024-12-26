@@ -55,8 +55,6 @@ public class RootVegetableCreator {
             rootVegetables = Parser.parseFileRootVegetable(string, rootType, rootColor);
             if (rootVegetables.isEmpty()) System.out.println(LIST_EMPTY);
         } while (rootVegetables.isEmpty());
-        System.out.println("Коллекция из " + rootVegetables.size() + " корнеплодов создана!");
-        System.out.println("-----------------------------------------------------");
         return rootVegetables;
     }
 
