@@ -21,7 +21,7 @@ public class FileWriterUtil {
         }
     }
 
-    private static <T> void writeSingleObjectToFile(String filePath, T object) {
+    public static <T> void writeSingleObjectToFile(String filePath, T object) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
             writer.write(object.toString());
             writer.newLine();
