@@ -1,6 +1,6 @@
 package reader;
 
-public class ValidationConstants {
+public final class ValidationConstants {
 
     private ValidationConstants() {}
 

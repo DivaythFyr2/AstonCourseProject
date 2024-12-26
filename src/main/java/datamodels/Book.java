@@ -1,11 +1,9 @@
 package datamodels;
 
-import java.util.Comparator;
-
-public class Book {
-    private String title;
-    private String author;
-    private int pageCount;
+public class Book implements Comparable<Book> {
+    private final String title;
+    private final String author;
+    private final int pageCount;
 
 
     public Book(BookBuilder bookBuilder) {
@@ -33,6 +31,11 @@ public class Book {
                 ", Автор='" + author + '\'' +
                 ", Кол-во страниц=" + pageCount +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Book other) {
+        return Integer.compare(this.pageCount, other.getPageCount());
     }
 
     public static class BookBuilder {

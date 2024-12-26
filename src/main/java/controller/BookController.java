@@ -93,17 +93,18 @@ public class BookController {
                                 Коллекция успешно отсортирована по <Названиям>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
+                        isSort = false;
                         actions();
                         break;
                     case "2":
-                        ShellSort.shellSort(database, byAuthor());                        System.out.println("""
+                        ShellSort.shellSort(database, byAuthor());
+                        System.out.println("""
                                 -----------------------------------------------------\s
                                 Коллекция успешно отсортирована по <Автору>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
                         actions();
+                        isSort = false;
                         break;
                     case "3":
                         ShellSort.shellSort(database, byPageCount());
@@ -118,18 +119,10 @@ public class BookController {
                     case "4":
                         if (isSort) {
                             Book book = creatingASearchObject();
-                            // ТУТ БУДЕТ ПРАВКА, ВЫЗОВ ПОИСКА БЕЗ КОМПОРАТОРА!
-                            // НА ДАННЫЙ МОМЕНТ ИЩЕТ В ТОМ СЛУЧАЕ ЕСЛИ ДО ЭТОГО НЕ БЫЛА ПРОИЗВЕДЕНА СОРТИРОВКА КОТОРАЯ ОТЛИЧАЕТСЯ ОТ ПЕРЕДАННОЙ!
-                            int result = BinarySearcher.binarySearch(database, book, byTittle());
-                            if (result >= 0) {
-                                System.out.println("Искомый объект: " + database.get(result).toString());
-                                System.out.println("Индекс объекта в коллекции: " + ++result);
-                                System.out.println("-----------------------------------------------------");
-                            } else {
-                                System.out.println("Данного объекта нет в коллекции!");
-                            }
+                            int resultIndex = BinarySearcher.binarySearch(database, book);
+                            printObject(resultIndex, database);
                         } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована!");
+                            System.out.println("Перед поиском, коллекция должна быть отсортирована по количеству стриниц!");
                         }
                         break;
                     case "5":
@@ -143,6 +136,17 @@ public class BookController {
             } else {
                 System.out.println("Ввод не корректен, введите одну из следующих цифр:");
             }
+        }
+    }
+
+    private static void printObject(Integer resultIndex, List<Book> list) {
+        if (resultIndex >= 0) {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("Искомый объект: " + list.get(resultIndex).toString());
+            System.out.println("Индекс объекта в коллекции: " + ++resultIndex);
+            System.out.println("-----------------------------------------------------");
+        } else {
+            System.out.println("Данного объекта нет в коллекции!");
         }
     }
 

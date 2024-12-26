@@ -1,11 +1,9 @@
 package datamodels;
 
-import java.util.Comparator;
-
-public class Car {
-    private String model;
-    private int power;
-    private int yearOfManufacture;
+public class Car implements Comparable<Car> {
+    private final String model;
+    private final int power;
+    private final int yearOfManufacture;
 
     public Car(CarBuilder builder) {
         this.model = builder.model;
@@ -33,6 +31,11 @@ public class Car {
                 ", Мощность=" + power +
                 ", Год производства=" + yearOfManufacture +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Car other) {
+        return Integer.compare(this.power, other.getPower());
     }
 
     public static class CarBuilder {

@@ -96,7 +96,7 @@ public class CarController {
                                 Коллекция успешно отсортирована по <Марке>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
+                        isSort = false;
                         actions();
                         break;
                     case "2":
@@ -116,24 +116,16 @@ public class CarController {
                                 Коллекция умпешно отсортирована по <Году производства>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
+                        isSort = false;
                         actions();
                         break;
                     case "4":
                         if (isSort) {
                             Car car = creatingASearchObject();
-                            // ТУТ БУДЕТ ПРАВКА, ВЫЗОВ ПОИСКА БЕЗ КОМПОРАТОРА!
-                            // НА ДАННЫЙ МОМЕНТ ИЩЕТ В ТОМ СЛУЧАЕ ЕСЛИ ДО ЭТОГО НЕ БЫЛА ПРОИЗВЕДЕНА СОРТИРОВКА КОТОРАЯ ОТЛИЧАЕТСЯ ОТ ПЕРЕДАННОЙ!
-                            int result = BinarySearcher.binarySearch(database, car, byPower());
-                            if (result >= 0) {
-                                System.out.println("Искомый объект: " + database.get(result).toString());
-                                System.out.println("Индекс объекта в коллекции: " + ++result);
-                                System.out.println("-----------------------------------------------------");
-                            } else {
-                                System.out.println("Данного объекта нет в коллекции!");
-                            }
+                            int resultIndex = BinarySearcher.binarySearch(database, car);
+                            printObject(resultIndex, database);
                         } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована!");
+                            System.out.println("Перед поиском, коллекция должна быть отсортирована по мощности!");
                         }
                         break;
                     case "5":
@@ -147,6 +139,17 @@ public class CarController {
             } else {
                 System.out.println("Ввод не корректен, введите одну из следующих цифр:");
             }
+        }
+    }
+
+    private static void printObject(Integer resultIndex, List<Car> list) {
+        if (resultIndex >= 0) {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("Искомый объект: " + list.get(resultIndex).toString());
+            System.out.println("Индекс объекта в коллекции: " + ++resultIndex);
+            System.out.println("-----------------------------------------------------");
+        } else {
+            System.out.println("Данного объекта нет в коллекции!");
         }
     }
 

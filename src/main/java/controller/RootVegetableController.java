@@ -92,7 +92,7 @@ public class RootVegetableController {
                                 Коллекция успешно отсортирована по <Типу>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
+                        isSort = false;
                         actions();
                         break;
                     case "2":
@@ -102,7 +102,7 @@ public class RootVegetableController {
                                 Коллекция успешно отсортирована по <Цвету>\s
                                 -----------------------------------------------------\s
                                 Введите следующее действие:\s""");
-                        isSort = true;
+                        isSort = false;
                         actions();
                         break;
                     case "3":
@@ -118,18 +118,10 @@ public class RootVegetableController {
                     case "4":
                         if (isSort) {
                             RootVegetable rootVegetable = creatingASearchObject();
-                            // ТУТ БУДЕТ ПРАВКА, ВЫЗОВ ПОИСКА БЕЗ КОМПОРАТОРА!
-                            // НА ДАННЫЙ МОМЕНТ ИЩЕТ В ТОМ СЛУЧАЕ ЕСЛИ ДО ЭТОГО НЕ БЫЛА ПРОИЗВЕДЕНА СОРТИРОВКА КОТОРАЯ ОТЛИЧАЕТСЯ ОТ ПЕРЕДАННОЙ!
-                            int result = BinarySearcher.binarySearch(database, rootVegetable, byType());
-                            if (result >= 0) {
-                                System.out.println("Искомый объект: " + database.get(result).toString());
-                                System.out.println("Индекс объекта в коллекции: " + ++result);
-                                System.out.println("-----------------------------------------------------");
-                            } else {
-                                System.out.println("Данного объекта нет в коллекции!");
-                            }
+                            int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
+                            printObject(resultIndex, database);
                         } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована!");
+                            System.out.println("Перед поиском, коллекция должна быть отсортирована по весу!");
                         }
                         break;
                     case "5":
@@ -143,6 +135,17 @@ public class RootVegetableController {
             } else {
                 System.out.println("Ввод не корректен, введите одну из следующих цифр:");
             }
+        }
+    }
+
+    private static void printObject(Integer resultIndex, List<RootVegetable> list) {
+        if (resultIndex >= 0) {
+            System.out.println("-----------------------------------------------------");
+            System.out.println("Искомый объект: " + list.get(resultIndex).toString());
+            System.out.println("Индекс объекта в коллекции: " + ++resultIndex);
+            System.out.println("-----------------------------------------------------");
+        } else {
+            System.out.println("Данного объекта нет в коллекции!");
         }
     }
 
