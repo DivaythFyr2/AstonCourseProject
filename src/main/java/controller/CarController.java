@@ -115,7 +115,7 @@ public class CarController {
                         if (isSort) {
                             Car car = CarCreator.creatingASearchObject(validation, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, car);
-                            printObject(resultIndex, database);
+                            PrintInfo.printObject(resultIndex, database);
                         } else {
                             System.out.println("""
                                     -------------------------------------------------------------------------\s
@@ -140,29 +140,6 @@ public class CarController {
             } else {
                 System.out.println("Ввод не корректен, введите одну из следующих цифр:");
             }
-        }
-    }
-
-    private static void printObject(Integer resultIndex, List<Car> list) {
-        if (resultIndex >= 0) {
-            System.out.println("-----------------------------------------------------");
-            System.out.println("Искомый объект: " + list.get(resultIndex).toString());
-            System.out.println("Индекс объекта в коллекции: " + ++resultIndex);
-            System.out.println("-----------------------------------------------------");
-            System.out.println("""
-                    Хотите записать данный объект в файл?
-                    1. Да
-                    2. Нет
-                    """);
-            String next = Controller.scanner.nextLine();
-            if (next.equals("1")) {
-                System.out.println("Введите путь для сохранения найденного объекта в файл:");
-                String filePath = Controller.scanner.nextLine();
-                FileWriterUtil.writeSingleObjectToFile(filePath, database.get(--resultIndex));
-                System.out.println("-----------------------------------------------------");
-            }
-        } else {
-            System.out.println("Данного объекта нет в коллекции!");
         }
     }
 }

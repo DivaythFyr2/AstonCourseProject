@@ -5,7 +5,7 @@ import java.util.Scanner;
 import static reader.ValidationUtils.*;
 
 public class Controller {
-    final static Scanner scanner = new Scanner(System.in);
+    public final static Scanner scanner = new Scanner(System.in);
 
     public static void start() {
         while (true) {
