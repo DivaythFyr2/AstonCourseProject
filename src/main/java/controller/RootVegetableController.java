@@ -2,16 +2,17 @@ package controller;
 
 import datamodels.RootVegetable;
 import datamodelscreators.RootVegetableCreator;
+import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
-
+import sorters.CustomSort;
+import static reader.ValidationUtils.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static controller.Controller.checkingForAutoCompletion;
 
 public class RootVegetableController {
 
@@ -25,6 +26,7 @@ public class RootVegetableController {
         createBookCollections();
     }
 
+    private static final RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType,rootColor);
     private static List<RootVegetable> database = new ArrayList<>();
 
     private RootVegetableController() {
@@ -33,27 +35,15 @@ public class RootVegetableController {
     public static void rootVegetableCreation(String type) {
         switch (type) {
             case "1":
-                database = new RootVegetableCreator(rootType, rootColor).createAndAddRootVegetables(Controller.scanner);
+                database = rootVegetableCreator.createAndAddRootVegetables(Controller.scanner);
                 actions();
                 break;
             case "2":
-                database = new RootVegetableCreator(rootType, rootColor).readerFileRootVegetables(Controller.scanner);
+                database = rootVegetableCreator.readerFileRootVegetables(Controller.scanner);
                 actions();
                 break;
             case "3":
-                while (true) {
-                    System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
-                    String input = Controller.scanner.nextLine();
-                    if (checkingForAutoCompletion(input)) {
-                        int value = Integer.parseInt(input);
-                        database = RootVegetableCreator.generateRandomVegetables(value, rootType, rootColor);
-                        System.out.println("Коллекция <Корнеплодов> создана, количество объектов - " + value);
-                        System.out.println("-----------------------------------------------------");
-                        break;
-                    } else {
-                        System.out.println("Введено не корректное значение!");
-                    }
-                }
+                database = rootVegetableCreator.generateRandomVegetables(Controller.scanner);
                 actions();
                 break;
         }
@@ -66,11 +56,13 @@ public class RootVegetableController {
                     1. Сортировать по "Типу"\s
                     2. Сортировать по "Цвету"\s
                     3. Сортировать по "Весу"\s
-                    4. Поиск корнеплода по параметру\s
-                    5. Печать коллекции в консоль\s
-                    0. Выход из программы.\s""");
+                    4. Сортировать по "Кастомизированной" сортировке <Весу>\s
+                    5. Поиск корнеплода по параметру\s
+                    6. Печать коллекции в консоль\s
+                    0. Выход из программы.\s
+                    """);
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes0_5(input)) {
+            if (isRes0_6(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, RootVegetable.byType());
@@ -103,15 +95,38 @@ public class RootVegetableController {
                         actions();
                         break;
                     case "4":
-                        if (isSort) {
-                            RootVegetable rootVegetable = RootVegetableCreator.creatingASearchObject(rootType,rootColor,Controller.scanner);
-                            int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
-                            printObject(resultIndex, database);
-                        } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована по весу!");
-                        }
+                        CustomSort.sort(database);
+                        System.out.println("""
+                                ----------------------------------------------------------------\s
+                                Коллекция успешно отсортирована <Кастомизированной>
+                                сортировкий по полю <Вес>\s
+                                ----------------------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = false;
+                        actions();
                         break;
                     case "5":
+                        if (isSort) {
+                            RootVegetable rootVegetable = RootVegetableCreator.creatingASearchObject(rootType, rootColor, Controller.scanner);
+                            int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
+                            printObject(resultIndex, database);
+                            if(resultIndex >= 0) {
+                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                                String filePath = Controller.scanner.nextLine();
+                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
+                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
+                                System.out.println("Объект записан в файл.");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
+                        } else {
+                            System.out.println("""
+                                    -------------------------------------------------------------------------\s
+                                    Перед поиском, коллекция должна быть отсортирована по весу!\s
+                                    -------------------------------------------------------------------------""");
+                        }
+                        break;
+                    case "6":
                         print();
                         actions();
                         break;

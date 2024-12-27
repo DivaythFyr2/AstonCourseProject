@@ -2,16 +2,18 @@ package controller;
 
 import datamodels.Book;
 import datamodelscreators.BookCreator;
+import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
+import static reader.ValidationUtils.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import sorters.CustomSort;
 
-import static controller.Controller.checkingForAutoCompletion;
 
 public class BookController {
     private static final List<String> titles;
@@ -24,7 +26,7 @@ public class BookController {
         createBookCollections();
     }
 
-
+    private static final BookCreator bookCreator = new BookCreator(titles,authors);
     private static List<Book> database = new ArrayList<>();
 
     private BookController() {
@@ -33,27 +35,15 @@ public class BookController {
     static void bookCreation(String type) {
         switch (type) {
             case "1":
-                database = new BookCreator(titles, authors).createAndAddBooks(Controller.scanner);
+                database = bookCreator.createAndAddBooks(Controller.scanner);
                 actions();
                 break;
             case "2":
-                database = new BookCreator(titles, authors).readerFileBooks(Controller.scanner);
+                database = bookCreator.readerFileBooks(Controller.scanner);
                 actions();
                 break;
             case "3":
-                while (true) {
-                    System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
-                    String input = Controller.scanner.nextLine();
-                    if (checkingForAutoCompletion(input)) {
-                        int value = Integer.parseInt(input);
-                        database = BookCreator.generateRandomBooks(value, titles, authors);
-                        System.out.println("Коллекция <Книг> создана, количество объектов - " + value);
-                        System.out.println("-----------------------------------------------------");
-                        break;
-                    } else {
-                        System.out.println("Введено не корректное значение!");
-                    }
-                }
+                database = bookCreator.generateRandomBooks(Controller.scanner);
                 actions();
                 break;
         }
@@ -66,11 +56,13 @@ public class BookController {
                     1. Сортировать по "Названию"\s
                     2. Сортировать по "Автору"\s
                     3. Сортировать по "Количеству страниц"\s
-                    4. Поиск книги по параметрам\s
-                    5. Печать коллекции в консоль\s
-                    0. Выход из программы.\s""");
+                    4. Сортировать по "Кастомизированной" сортировке <Количество страниц>\s
+                    5. Поиск книги по параметрам\s
+                    6. Печать коллекции в консоль\s
+                    0. Выход из программы.\s
+                    """);
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes0_5(input)) {
+            if (isRes0_6(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, Book.byTittle());
@@ -103,15 +95,38 @@ public class BookController {
                         actions();
                         break;
                     case "4":
-                        if (isSort) {
-                            Book book = BookCreator.creatingASearchObject(titles,authors,Controller.scanner);
-                            int resultIndex = BinarySearcher.binarySearch(database, book);
-                            printObject(resultIndex, database);
-                        } else {
-                            System.out.println("Перед поиском, коллекция должна быть отсортирована по количеству стриниц!");
-                        }
+                        CustomSort.sort(database);
+                        System.out.println("""
+                                ----------------------------------------------------------------\s
+                                Коллекция успешно отсортирована <Кастомизированной>
+                                сортировкий по полю <Количество страниц>\s
+                                ----------------------------------------------------------------\s
+                                Введите следующее действие:\s""");
+                        isSort = false;
+                        actions();
                         break;
                     case "5":
+                        if (isSort) {
+                            Book book = BookCreator.creatingASearchObject(titles, authors, Controller.scanner);
+                            int resultIndex = BinarySearcher.binarySearch(database, book);
+                            printObject(resultIndex, database);
+                            if(resultIndex >= 0) {
+                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                                String filePath = Controller.scanner.nextLine();
+                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
+                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
+                                System.out.println("Объект записан в файл.");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
+                        } else {
+                            System.out.println("""
+                                    -------------------------------------------------------------------------\s
+                                    Перед поиском, коллекция должна быть отсортирована по количеству стриниц!\s
+                                    -------------------------------------------------------------------------""");
+                        }
+                        break;
+                    case "6":
                         print();
                         actions();
                         break;

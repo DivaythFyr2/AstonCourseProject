@@ -4,7 +4,7 @@ import datamodels.Book;
 import ioData.Parser;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
-
+import static reader.ValidationUtils.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +12,12 @@ import java.util.Random;
 import java.util.Scanner;
 import static reader.StringsConsole.*;
 
+
 import static reader.ValidationConstants.*;
 
 public class BookCreator {
-    private List<String> titles;
-    private List<String> authors;
+    private final List<String> titles;
+    private final List<String> authors;
 
     public BookCreator(List<String> titles, List<String> authors) {
         this.titles = titles;
@@ -54,11 +55,22 @@ public class BookCreator {
         return books;
     }
 
-    public static List<Book> generateRandomBooks(int count, List<String> titles, List<String> authors) {
+    public List<Book> generateRandomBooks(Scanner scanner) {
+        int value;
+        while (true) {
+            System.out.println("Введите количество объектов для автозаполнения от 1 до 100");
+            String input = scanner.nextLine();
+            if(checkingForAutoCompletion(input)) {
+                value = Integer.parseInt(input);
+                break;
+            } else {
+                System.out.println("Введено не корректное значение!");
+            }
+        }
         List<Book> books = new ArrayList<>();
         Random r = new Random();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < value; i++) {
             String title = titles.get(r.nextInt(titles.size()));
             String author = authors.get(r.nextInt(authors.size()));
             int pages = BOOK_MIN_PAGE + r.nextInt(BOOK_MAX_PAGE - BOOK_MIN_PAGE + 1);
@@ -69,6 +81,8 @@ public class BookCreator {
                     .pageCount(pages)
                     .build());
         }
+        System.out.println("Коллекция <Книг> создана, количество объектов - " + value);
+        System.out.println("-----------------------------------------------------");
         return books;
     }
     public static Book creatingASearchObject(List<String> titles, List<String> authors, Scanner scanner) {

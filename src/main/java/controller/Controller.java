@@ -2,6 +2,8 @@ package controller;
 
 import java.util.Scanner;
 
+import static reader.ValidationUtils.*;
+
 public class Controller {
     final static Scanner scanner = new Scanner(System.in);
 
@@ -61,17 +63,5 @@ public class Controller {
             }
         }
         return result;
-    }
-
-    static boolean checkingForAutoCompletion(String input) {
-        return input.matches("^(100|[1-9][0-9]?)$");
-    }
-
-    private static boolean isRes0_4(String input) {
-        return input.matches("[0-4]");
-    }
-
-    static boolean isRes0_5(String input) {
-        return input.matches("[0-5]");
     }
 }

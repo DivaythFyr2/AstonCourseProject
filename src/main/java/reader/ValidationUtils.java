@@ -37,4 +37,17 @@ public final class ValidationUtils {
         if (param == null || param.isEmpty()) return false;
         return list.stream().anyMatch(param::equalsIgnoreCase);
     }
+
+    public static boolean checkingForAutoCompletion(String input) {
+        return input.matches("^(100|[1-9][0-9]?)$");
+    }
+
+    public static boolean isRes0_4(String input) {
+        return input.matches("[0-4]");
+    }
+
+    public static boolean isRes0_6(String input) {
+        return input.matches("[0-6]");
+    }
 }
+
