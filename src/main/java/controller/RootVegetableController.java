@@ -6,7 +6,9 @@ import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 import sorters.CustomSort;
+
 import static reader.ValidationUtils.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,7 +28,7 @@ public class RootVegetableController {
         createBookCollections();
     }
 
-    private static final RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType,rootColor);
+    private static final RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType, rootColor);
     private static List<RootVegetable> database = new ArrayList<>();
 
     private RootVegetableController() {
@@ -59,10 +61,11 @@ public class RootVegetableController {
                     4. Сортировать по "Кастомизированной" сортировке <Весу>\s
                     5. Поиск корнеплода по параметру\s
                     6. Печать коллекции в консоль\s
+                    7. Запись коллекции в файл\s
                     0. Выход из программы.\s
                     """);
             String input = Controller.scanner.nextLine();
-            if (isRes0_6(input)) {
+            if (isRes0_7(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, RootVegetable.byType());
@@ -110,15 +113,6 @@ public class RootVegetableController {
                             RootVegetable rootVegetable = RootVegetableCreator.creatingASearchObject(rootType, rootColor, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
                             printObject(resultIndex, database);
-                            if(resultIndex >= 0) {
-                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
-                                String filePath = Controller.scanner.nextLine();
-                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
-                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
-                                System.out.println("Объект записан в файл.");
-                            } else {
-                                System.out.println("Данного объекта нет в коллекции!");
-                            }
                         } else {
                             System.out.println("""
                                     -------------------------------------------------------------------------\s
@@ -128,6 +122,12 @@ public class RootVegetableController {
                         break;
                     case "6":
                         print();
+                        actions();
+                        break;
+                    case "7":
+                        System.out.println("Введите путь для сохранения коллекции в файл:");
+                        String path = Controller.scanner.nextLine();
+                        FileWriterUtil.writeToFile(path, database);
                         actions();
                         break;
                     case "0":
@@ -146,6 +146,18 @@ public class RootVegetableController {
             System.out.println("Искомый объект: " + list.get(resultIndex).toString());
             System.out.println("Индекс объекта в коллекции: " + ++resultIndex);
             System.out.println("-----------------------------------------------------");
+            System.out.println("""
+                    Хотите записать данный объект в файл?
+                    1. Да
+                    2. Нет
+                    """);
+            String next = Controller.scanner.nextLine();
+            if (next.equals("1")) {
+                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                String filePath = Controller.scanner.nextLine();
+                FileWriterUtil.writeSingleObjectToFile(filePath, database.get(--resultIndex));
+                System.out.println("-----------------------------------------------------");
+            }
         } else {
             System.out.println("Данного объекта нет в коллекции!");
         }

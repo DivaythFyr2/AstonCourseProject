@@ -46,8 +46,8 @@ public final class ValidationUtils {
         return input.matches("[0-4]");
     }
 
-    public static boolean isRes0_6(String input) {
-        return input.matches("[0-6]");
+    public static boolean isRes0_7(String input) {
+        return input.matches("[0-7]");
     }
 }
 
