@@ -3,6 +3,7 @@ package controller;
 import datamodels.Car;
 import datamodelscreators.CarCreator;
 import filewriter.FileWriterUtil;
+import iodata.PrintInfo;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
@@ -123,7 +124,7 @@ public class CarController {
                         }
                         break;
                     case "6":
-                        print();
+                        PrintInfo.print(database);
                         actions();
                         break;
                     case "7":
@@ -163,14 +164,5 @@ public class CarController {
         } else {
             System.out.println("Данного объекта нет в коллекции!");
         }
-    }
-
-    private static void print() {
-        int counter = 1;
-        System.out.println("--------------------------------------------------------------------");
-        for (Car car : database) {
-            System.out.println(counter++ + ". " + car.toString());
-        }
-        System.out.println("--------------------------------------------------------------------");
     }
 }

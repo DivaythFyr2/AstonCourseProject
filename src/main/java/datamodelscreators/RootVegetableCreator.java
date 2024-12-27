@@ -1,7 +1,7 @@
 package datamodelscreators;
 
 import datamodels.RootVegetable;
-import ioData.Parser;
+import iodata.Parser;
 import reader.*;
 
 import java.io.File;

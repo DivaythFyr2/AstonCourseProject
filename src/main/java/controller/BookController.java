@@ -3,6 +3,7 @@ package controller;
 import datamodels.Book;
 import datamodelscreators.BookCreator;
 import filewriter.FileWriterUtil;
+import iodata.PrintInfo;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 
@@ -121,7 +122,7 @@ public class BookController {
                         }
                         break;
                     case "6":
-                        print();
+                        PrintInfo.print(database);
                         actions();
                         break;
                     case "7":
@@ -163,7 +164,7 @@ public class BookController {
         }
     }
 
-    static void createBookCollections() {
+    private static void createBookCollections() {
         try {
             List<String> lines = Files.readAllLines(Path.of("src/main/resources/Book Manufactures.txt"));
             for (String line : lines) {
@@ -176,14 +177,5 @@ public class BookController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static void print() {
-        int counter = 1;
-        System.out.println("--------------------------------------------------------------------");
-        for (Book book : database) {
-            System.out.println(counter++ + ". " + book.toString());
-        }
-        System.out.println("--------------------------------------------------------------------");
     }
 }

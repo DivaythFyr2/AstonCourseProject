@@ -3,6 +3,7 @@ package controller;
 import datamodels.RootVegetable;
 import datamodelscreators.RootVegetableCreator;
 import filewriter.FileWriterUtil;
+import iodata.PrintInfo;
 import searchItems.BinarySearcher;
 import sorters.ShellSort;
 import sorters.CustomSort;
@@ -121,7 +122,7 @@ public class RootVegetableController {
                         }
                         break;
                     case "6":
-                        print();
+                        PrintInfo.print(database);
                         actions();
                         break;
                     case "7":
@@ -176,14 +177,5 @@ public class RootVegetableController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static void print() {
-        int counter = 1;
-        System.out.println("--------------------------------------------------------------------");
-        for (RootVegetable rootVegetable : database) {
-            System.out.println(counter++ + ". " + rootVegetable.toString());
-        }
-        System.out.println("--------------------------------------------------------------------");
     }
 }
