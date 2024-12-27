@@ -17,7 +17,7 @@ public class CustomSort {
             T item = items.get(i); // вытаскиваем каждый объект из списка и проверяем его числовой парамтр на четность
             if ((item instanceof Car && ((Car) item).getPower() % 2 == 0) || // и проверяем его числовой параметр на четность
                     (item instanceof Book && ((Book) item).getPageCount() % 2 == 0) ||
-                    (item instanceof RootVegetable && ((RootVegetable) item).getWeight() % 2 == 0)) {
+                    (item instanceof RootVegetable && Math.round(((RootVegetable) item).getWeight()) % 2 == 0)) {
                 listItems.add(item);  // если он относится к какому-то классу, добавляем его
                 listIndex.add(i); // и запоминаем его индекс в другом списке
             }
