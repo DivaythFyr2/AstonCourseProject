@@ -7,7 +7,7 @@ import reader.*;
 import java.io.File;
 import java.util.*;
 
-import static controller.Controller.checkingForAutoCompletion;
+import static reader.ValidationUtils.*;
 import static reader.StringsConsole.LIST_EMPTY;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MAX_WEIGHT;
 import static reader.ValidationConstants.ROOT_VEGETABLES_MIN_WEIGHT;
@@ -20,7 +20,6 @@ public class RootVegetableCreator {
         this.rootType = rootType;
         this.rootColor = rootColor;
     }
-
     public List<RootVegetable> createAndAddRootVegetables(Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
         List<RootVegetable> rootVegetables = new ArrayList<>();
@@ -41,7 +40,6 @@ public class RootVegetableCreator {
 
         return rootVegetables;
     }
-
     public List<RootVegetable> readerFileRootVegetables(Scanner scanner) {
 
         List<RootVegetable> rootVegetables;
@@ -59,7 +57,7 @@ public class RootVegetableCreator {
         while (true) {
             System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
             String input = scanner.nextLine();
-            if (checkingForAutoCompletion(input)) {
+            if(checkingForAutoCompletion(input)) {
                 value = Integer.parseInt(input);
                 break;
             } else {
@@ -85,7 +83,6 @@ public class RootVegetableCreator {
         System.out.println("-----------------------------------------------------");
         return rootVegetables;
     }
-
     public static RootVegetable creatingASearchObject(List<String> rootType, List<String> rootColor, Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserRootVegetables());
         String[] parse = readerUser.create(rootType, rootColor, scanner);

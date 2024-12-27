@@ -2,15 +2,18 @@ package controller;
 
 import datamodels.Book;
 import datamodelscreators.BookCreator;
+import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
-import sorters.CustomSort;
 import sorters.ShellSort;
+import static reader.ValidationUtils.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import sorters.CustomSort;
+
 
 public class BookController {
     private static final List<String> titles;
@@ -23,7 +26,7 @@ public class BookController {
         createBookCollections();
     }
 
-    private static final BookCreator bookCreator = new BookCreator(titles, authors);
+    private static final BookCreator bookCreator = new BookCreator(titles,authors);
     private static List<Book> database = new ArrayList<>();
 
     private BookController() {
@@ -59,7 +62,7 @@ public class BookController {
                     0. Выход из программы.\s
                     """);
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes0_6(input)) {
+            if (isRes0_6(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, Book.byTittle());
@@ -107,6 +110,15 @@ public class BookController {
                             Book book = BookCreator.creatingASearchObject(titles, authors, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, book);
                             printObject(resultIndex, database);
+                            if(resultIndex >= 0) {
+                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                                String filePath = Controller.scanner.nextLine();
+                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
+                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
+                                System.out.println("Объект записан в файл.");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
                         } else {
                             System.out.println("""
                                     -------------------------------------------------------------------------\s

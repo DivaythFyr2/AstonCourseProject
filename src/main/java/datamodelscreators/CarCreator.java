@@ -1,11 +1,10 @@
 package datamodelscreators;
 
-import controller.Controller;
 import datamodels.Car;
 import ioData.Parser;
 import reader.ReaderUserCar;
 import reader.ReaderUserContext;
-
+import static reader.ValidationUtils.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,6 @@ public class CarCreator {
 
         return cars;
     }
-
     public List<Car> readerFileCars(Scanner scanner) {
 
         List<Car> cars;
@@ -58,9 +56,9 @@ public class CarCreator {
     public List<Car> generateRandomCars(Scanner scanner) {
         int value;
         while (true) {
-            System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+            System.out.println("Введите количество объектов для автозаполнения от 1 до 100");
             String input = scanner.nextLine();
-            if (Controller.checkingForAutoCompletion(input)) {
+            if(checkingForAutoCompletion(input)) {
                 value = Integer.parseInt(input);
                 break;
             } else {

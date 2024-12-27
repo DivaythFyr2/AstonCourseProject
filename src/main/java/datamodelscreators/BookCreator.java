@@ -4,15 +4,14 @@ import datamodels.Book;
 import ioData.Parser;
 import reader.ReaderUserBook;
 import reader.ReaderUserContext;
-
+import static reader.ValidationUtils.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import static controller.Controller.checkingForAutoCompletion;
 import static reader.StringsConsole.*;
+
 
 import static reader.ValidationConstants.*;
 
@@ -44,7 +43,6 @@ public class BookCreator {
 
         return books;
     }
-
     public List<Book> readerFileBooks(Scanner scanner) {
 
         List<Book> books;
@@ -60,11 +58,10 @@ public class BookCreator {
     public List<Book> generateRandomBooks(Scanner scanner) {
         int value;
         while (true) {
-            System.out.println("Введите количество обьектов для автозаполнения от 1 до 100");
+            System.out.println("Введите количество объектов для автозаполнения от 1 до 100");
             String input = scanner.nextLine();
-            if (checkingForAutoCompletion(input)) {
+            if(checkingForAutoCompletion(input)) {
                 value = Integer.parseInt(input);
-
                 break;
             } else {
                 System.out.println("Введено не корректное значение!");
@@ -88,7 +85,6 @@ public class BookCreator {
         System.out.println("-----------------------------------------------------");
         return books;
     }
-
     public static Book creatingASearchObject(List<String> titles, List<String> authors, Scanner scanner) {
         ReaderUserContext readerUser = new ReaderUserContext(new ReaderUserBook());
         String[] parse = readerUser.create(titles, authors, scanner);

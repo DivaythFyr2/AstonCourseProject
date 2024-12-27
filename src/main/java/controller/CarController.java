@@ -2,9 +2,10 @@ package controller;
 
 import datamodels.Car;
 import datamodelscreators.CarCreator;
+import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
-import sorters.CustomSort;
 import sorters.ShellSort;
+import static reader.ValidationUtils.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,8 +13,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+import sorters.CustomSort;
 
-import static controller.Controller.isRes0_6;
 
 
 public class CarController {
@@ -112,10 +113,19 @@ public class CarController {
                             Car car = CarCreator.creatingASearchObject(validation, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, car);
                             printObject(resultIndex, database);
+                            if(resultIndex >= 0) {
+                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                                String filePath = Controller.scanner.nextLine();
+                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
+                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
+                                System.out.println("Объект записан в файл.");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
                         } else {
                             System.out.println("""
                                     -------------------------------------------------------------------------\s
-                                    Перед поиском, коллекция должна быть отсортирована по количеству стриниц!\s
+                                    Перед поиском, коллекция должна быть отсортирована по мощности!\s
                                     -------------------------------------------------------------------------""");
                         }
                         break;

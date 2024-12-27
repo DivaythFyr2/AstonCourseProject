@@ -2,15 +2,17 @@ package controller;
 
 import datamodels.RootVegetable;
 import datamodelscreators.RootVegetableCreator;
+import filewriter.FileWriterUtil;
 import searchItems.BinarySearcher;
-import sorters.CustomSort;
 import sorters.ShellSort;
-
+import sorters.CustomSort;
+import static reader.ValidationUtils.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class RootVegetableController {
 
@@ -24,7 +26,7 @@ public class RootVegetableController {
         createBookCollections();
     }
 
-    private static final RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType, rootColor);
+    private static final RootVegetableCreator rootVegetableCreator = new RootVegetableCreator(rootType,rootColor);
     private static List<RootVegetable> database = new ArrayList<>();
 
     private RootVegetableController() {
@@ -60,7 +62,7 @@ public class RootVegetableController {
                     0. Выход из программы.\s
                     """);
             String input = Controller.scanner.nextLine();
-            if (Controller.isRes0_6(input)) {
+            if (isRes0_6(input)) {
                 switch (input) {
                     case "1":
                         ShellSort.shellSort(database, RootVegetable.byType());
@@ -97,7 +99,7 @@ public class RootVegetableController {
                         System.out.println("""
                                 ----------------------------------------------------------------\s
                                 Коллекция успешно отсортирована <Кастомизированной>
-                                сортировкий по полю <Весу>\s
+                                сортировкий по полю <Вес>\s
                                 ----------------------------------------------------------------\s
                                 Введите следующее действие:\s""");
                         isSort = false;
@@ -108,10 +110,19 @@ public class RootVegetableController {
                             RootVegetable rootVegetable = RootVegetableCreator.creatingASearchObject(rootType, rootColor, Controller.scanner);
                             int resultIndex = BinarySearcher.binarySearch(database, rootVegetable);
                             printObject(resultIndex, database);
+                            if(resultIndex >= 0) {
+                                System.out.println("Введите путь для сохранения найденного объекта в файл:");
+                                String filePath = Controller.scanner.nextLine();
+                                FileWriterUtil.writeSingleObjectToFile(filePath,database.get(resultIndex));
+                                System.out.println("Искомый объект: " + database.get(resultIndex).toString());
+                                System.out.println("Объект записан в файл.");
+                            } else {
+                                System.out.println("Данного объекта нет в коллекции!");
+                            }
                         } else {
                             System.out.println("""
                                     -------------------------------------------------------------------------\s
-                                    Перед поиском, коллекция должна быть отсортирована по количеству стриниц!\s
+                                    Перед поиском, коллекция должна быть отсортирована по весу!\s
                                     -------------------------------------------------------------------------""");
                         }
                         break;
